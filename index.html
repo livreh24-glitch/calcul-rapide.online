@@ -26,6 +26,8 @@
       height: 2px; width: 0; background: #2563eb; transition: width .2s;
     }
     .nav-link:hover::after { width: 100%; }
+    .page-section { display: none; }
+    .page-section.active { display: block; }
   </style>
 </head>
 
@@ -34,7 +36,7 @@
   <!-- HEADER -->
   <header class="bg-white/90 backdrop-blur shadow-sm sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2">
+      <a href="#" onclick="showPage('home')" class="flex items-center gap-2">
         <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg shadow">
           <i class="fas fa-calculator text-white text-xl"></i>
         </div>
@@ -49,317 +51,311 @@
       </a>
 
       <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-        <a href="#finance" class="nav-link text-slate-600 hover:text-blue-600">Finance</a>
-        <a href="#chomage" class="nav-link text-slate-600 hover:text-blue-600">Chômage</a>
-        <a href="#trajet" class="nav-link text-slate-600 hover:text-blue-600">Trajet</a>
-        <a href="#sante" class="nav-link text-slate-600 hover:text-blue-600">Santé</a>
-        <a href="mentions-legales.html" class="nav-link text-slate-600 hover:text-blue-600">Mentions</a>
+        <a href="#" onclick="showPage('home')" class="nav-link text-slate-600 hover:text-blue-600">Accueil</a>
+        <a href="#finance" onclick="showPage('home')" class="nav-link text-slate-600 hover:text-blue-600">Calculateurs</a>
+        <a href="#" onclick="showPage('mentions')" class="nav-link text-slate-600 hover:text-blue-600">Mentions</a>
       </nav>
 
-      <a href="#finance" class="md:hidden text-xs font-semibold text-blue-600 border border-blue-100 px-3 py-1 rounded-full">
-        Calculer
-      </a>
+      <button onclick="showPage('home')" class="md:hidden text-xs font-semibold text-blue-600 border border-blue-100 px-3 py-1 rounded-full">
+        Menu
+      </button>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero-bg text-white py-16 px-4 text-center">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl md:text-4xl font-black mb-4">Tous vos calculs en un clic</h1>
-      <p class="text-lg md:text-xl text-slate-200 mb-6">
-        Salaire net, chômage, prêt immobilier, TVA, IMC, trajet, coût essence... Plus de 15 calculateurs gratuits et instantanés.
-      </p>
-      <a href="#finance" class="inline-flex items-center gap-2 bg-white text-blue-700 font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-slate-100">
-        Commencer <i class="fas fa-arrow-down"></i>
-      </a>
-    </div>
-  </section>
-
-  <!-- MAIN CONTENT -->
-  <main class="max-w-6xl mx-auto px-4 py-10 space-y-12">
-
-    <!-- FINANCE -->
-    <section id="finance">
-      <h2 class="text-2xl md:text-3xl font-black mb-4">Finance</h2>
-      <div class="grid md:grid-cols-2 gap-5">
-
-        <!-- SALAIRE BRUT -> NET -->
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-blue-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-wallet text-blue-500"></i>
-            Salaire brut → net
-          </h3>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Salaire brut mensuel (€)</label>
-          <input id="sal_brut" type="number" placeholder="Ex: 2300" class="w-full p-3 border rounded-lg mb-3" />
-          <button onclick="calcSalaire()" class="btn-soft w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg">
-            Calculer
-          </button>
-          <div id="sal_result" class="hidden mt-4 p-3 bg-blue-50 rounded-lg">
-            <p class="text-sm font-bold">Salaire net estimé : <span id="sal_net" class="text-blue-700"></span></p>
-          </div>
-        </article>
-
-        <!-- PRÊT IMMOBILIER -->
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-indigo-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-home text-indigo-500"></i>
-            Prêt immobilier
-          </h3>
-          <div class="space-y-3">
-            <input id="loan_capital" type="number" placeholder="Montant emprunté (€)" class="w-full p-3 border rounded-lg" />
-            <input id="loan_years" type="number" placeholder="Durée (années)" class="w-full p-3 border rounded-lg" />
-            <input id="loan_rate" type="number" placeholder="Taux (%)" class="w-full p-3 border rounded-lg" />
-            <button onclick="calcLoan()" class="btn-soft w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg">
-              Calculer
-            </button>
-          </div>
-          <div id="loan_result" class="hidden mt-4 p-3 bg-indigo-50 rounded-lg">
-            <p class="text-sm font-bold">Mensualité : <span id="loan_monthly" class="text-indigo-700"></span></p>
-          </div>
-        </article>
-
-        <!-- TVA -->
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-orange-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-receipt text-orange-500"></i>
-            TVA (HT → TTC)
-          </h3>
-          <div class="space-y-3">
-            <input id="tva_ht" type="number" placeholder="Montant HT (€)" class="w-full p-3 border rounded-lg" />
-            <select id="tva_rate" class="w-full p-3 border rounded-lg">
-              <option value="20">20%</option>
-              <option value="10">10%</option>
-              <option value="5.5">5.5%</option>
-            </select>
-            <button onclick="calcTVA()" class="btn-soft w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg">
-              Calculer
-            </button>
-          </div>
-          <div id="tva_result" class="hidden mt-4 p-3 bg-orange-50 rounded-lg">
-            <p class="text-sm font-bold">Montant TTC : <span id="tva_ttc" class="text-orange-700"></span></p>
-          </div>
-        </article>
+  <!-- PAGE ACCUEIL (Calculateurs) -->
+  <div id="home" class="page-section active">
+    
+    <!-- HERO -->
+    <section class="hero-bg text-white py-16 px-4 text-center">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-black mb-4">Tous vos calculs en un clic</h1>
+        <p class="text-lg md:text-xl text-slate-200 mb-6">
+          Salaire net, chômage, prêt immobilier, TVA, IMC, trajet, coût essence... Plus de 15 calculateurs gratuits et instantanés.
+        </p>
+        <a href="#finance" class="inline-flex items-center gap-2 bg-white text-blue-700 font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-slate-100">
+          Commencer <i class="fas fa-arrow-down"></i>
+        </a>
       </div>
     </section>
 
-    <!-- CHÔMAGE -->
-    <section id="chomage">
-      <h2 class="text-2xl md:text-3xl font-black mb-4">Chômage</h2>
-      <div class="grid md:grid-cols-2 gap-5">
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-green-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-shield-halved text-green-500"></i>
-            Estimation ARE (chômage)
-          </h3>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Salaire brut moyen (€)</label>
-          <input id="are_brut" type="number" placeholder="Ex: 2000" class="w-full p-3 border rounded-lg mb-3" />
-          <button onclick="calcARE()" class="btn-soft w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg">
-            Calculer
-          </button>
-          <div id="are_result" class="hidden mt-4 p-3 bg-green-50 rounded-lg">
-            <p class="text-sm font-bold">Allocation mensuelle estimée : <span id="are_monthly" class="text-green-700"></span></p>
-          </div>
-        </article>
-      </div>
-    </section>
+    <!-- MAIN CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 py-10 space-y-12">
 
-    <!-- TRAJET -->
-    <section id="trajet">
-      <h2 class="text-2xl md:text-3xl font-black mb-4">Trajet</h2>
-      <div class="grid md:grid-cols-2 gap-5">
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-slate-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-road text-slate-600"></i>
-            Durée de trajet
-          </h3>
-          <div class="space-y-3">
-            <input id="trip_distance" type="number" placeholder="Distance (km)" class="w-full p-3 border rounded-lg" />
-            <input id="trip_speed" type="number" placeholder="Vitesse (km/h)" class="w-full p-3 border rounded-lg" />
-            <button onclick="calcTrip()" class="btn-soft w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-lg">
+      <!-- FINANCE -->
+      <section id="finance">
+        <h2 class="text-2xl md:text-3xl font-black mb-4">Finance</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+
+          <!-- SALAIRE BRUT -> NET -->
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-blue-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-wallet text-blue-500"></i>
+              Salaire brut → net
+            </h3>
+            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Salaire brut mensuel (€)</label>
+            <input id="sal_brut" type="number" placeholder="Ex: 2300" class="w-full p-3 border rounded-lg mb-3" />
+            <button onclick="calcSalaire()" class="btn-soft w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg">
               Calculer
             </button>
-          </div>
-          <div id="trip_result" class="hidden mt-4 p-3 bg-slate-100 rounded-lg">
-            <p class="text-sm font-bold">Durée : <span id="trip_time" class="text-slate-800"></span></p>
-          </div>
-        </article>
+            <div id="sal_result" class="hidden mt-4 p-3 bg-blue-50 rounded-lg">
+              <p class="text-sm font-bold">Salaire net estimé : <span id="sal_net" class="text-2xl text-blue-700"></span></p>
+            </div>
+          </article>
 
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-sky-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-gas-pump text-sky-500"></i>
-            Coût essence
-          </h3>
-          <div class="space-y-3">
-            <input id="fuel_distance" type="number" placeholder="Distance (km)" class="w-full p-3 border rounded-lg" />
-            <input id="fuel_consumption" type="number" placeholder="Consommation (L/100km)" class="w-full p-3 border rounded-lg" />
-            <input id="fuel_price" type="number" placeholder="Prix essence (€/L)" class="w-full p-3 border rounded-lg" />
-            <button onclick="calcFuel()" class="btn-soft w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-lg">
+          <!-- PRÊT IMMOBILIER -->
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-indigo-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-home text-indigo-500"></i>
+              Prêt immobilier
+            </h3>
+            <div class="space-y-3">
+              <input id="loan_capital" type="number" placeholder="Montant emprunté (€)" class="w-full p-3 border rounded-lg" />
+              <input id="loan_years" type="number" placeholder="Durée (années)" class="w-full p-3 border rounded-lg" />
+              <input id="loan_rate" type="number" step="0.1" placeholder="Taux (%)" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcLoan()" class="btn-soft w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="loan_result" class="hidden mt-4 p-3 bg-indigo-50 rounded-lg">
+              <p class="text-sm font-bold">Mensualité : <span id="loan_monthly" class="text-2xl text-indigo-700"></span></p>
+              <p class="text-sm">Coût total : <span id="loan_total" class="text-indigo-700"></span></p>
+            </div>
+          </article>
+
+          <!-- TVA -->
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-orange-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-receipt text-orange-500"></i>
+              TVA (HT → TTC)
+            </h3>
+            <div class="space-y-3">
+              <input id="tva_ht" type="number" placeholder="Montant HT (€)" class="w-full p-3 border rounded-lg" />
+              <select id="tva_rate" class="w-full p-3 border rounded-lg">
+                <option value="20">20%</option>
+                <option value="10">10%</option>
+                <option value="5.5">5.5%</option>
+              </select>
+              <button onclick="calcTVA()" class="btn-soft w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="tva_result" class="hidden mt-4 p-3 bg-orange-50 rounded-lg">
+              <p class="text-sm font-bold">Montant TTC : <span id="tva_ttc" class="text-2xl text-orange-700"></span></p>
+              <p class="text-sm">TVA : <span id="tva_amount" class="text-orange-700"></span></p>
+            </div>
+          </article>
+
+          <!-- INTÉRÊTS COMPOSÉS -->
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-emerald-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-piggy-bank text-emerald-500"></i>
+              Intérêts composés
+            </h3>
+            <div class="space-y-3">
+              <input id="ic_capital" type="number" placeholder="Capital initial (€)" class="w-full p-3 border rounded-lg" />
+              <input id="ic_monthly" type="number" placeholder="Versement mensuel (€)" class="w-full p-3 border rounded-lg" />
+              <input id="ic_years" type="number" placeholder="Durée (années)" class="w-full p-3 border rounded-lg" />
+              <input id="ic_rate" type="number" step="0.1" placeholder="Taux annuel (%)" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcInterets()" class="btn-soft w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="ic_result" class="hidden mt-4 p-3 bg-emerald-50 rounded-lg">
+              <p class="text-sm font-bold">Capital final : <span id="ic_final" class="text-2xl text-emerald-700"></span></p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CHÔMAGE -->
+      <section id="chomage">
+        <h2 class="text-2xl md:text-3xl font-black mb-4">Chômage</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-green-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-shield-halved text-green-500"></i>
+              Estimation ARE (chômage)
+            </h3>
+            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Salaire brut moyen (€)</label>
+            <input id="are_brut" type="number" placeholder="Ex: 2000" class="w-full p-3 border rounded-lg mb-3" />
+            <button onclick="calcARE()" class="btn-soft w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg">
               Calculer
             </button>
-          </div>
-          <div id="fuel_result" class="hidden mt-4 p-3 bg-sky-50 rounded-lg">
-            <p class="text-sm font-bold">Coût estimé : <span id="fuel_cost" class="text-sky-700"></span></p>
-          </div>
-        </article>
-      </div>
-    </section>
+            <div id="are_result" class="hidden mt-4 p-3 bg-green-50 rounded-lg">
+              <p class="text-sm font-bold">Allocation mensuelle : <span id="are_monthly" class="text-2xl text-green-700"></span></p>
+              <p class="text-sm">Allocation journalière : <span id="are_daily" class="text-green-700"></span></p>
+            </div>
+          </article>
+        </div>
+      </section>
 
-    <!-- SANTÉ -->
-    <section id="sante">
-      <h2 class="text-2xl md:text-3xl font-black mb-4">Santé</h2>
-      <div class="grid md:grid-cols-2 gap-5">
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-pink-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-weight-scale text-pink-500"></i>
-            IMC (Indice de Masse Corporelle)
-          </h3>
-          <div class="space-y-3">
-            <input id="imc_weight" type="number" placeholder="Poids (kg)" class="w-full p-3 border rounded-lg" />
-            <input id="imc_height" type="number" placeholder="Taille (cm)" class="w-full p-3 border rounded-lg" />
-            <button onclick="calcIMC()" class="btn-soft w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg">
-              Calculer
-            </button>
-          </div>
-          <div id="imc_result" class="hidden mt-4 p-3 bg-pink-50 rounded-lg">
-            <p class="text-sm font-bold">Votre IMC : <span id="imc_value" class="text-pink-700"></span></p>
-          </div>
-        </article>
+      <!-- TRAJET -->
+      <section id="trajet">
+        <h2 class="text-2xl md:text-3xl font-black mb-4">Trajet</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-slate-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-road text-slate-600"></i>
+              Durée de trajet
+            </h3>
+            <div class="space-y-3">
+              <input id="trip_distance" type="number" placeholder="Distance (km)" class="w-full p-3 border rounded-lg" />
+              <input id="trip_speed" type="number" placeholder="Vitesse (km/h)" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcTrip()" class="btn-soft w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="trip_result" class="hidden mt-4 p-3 bg-slate-100 rounded-lg">
+              <p class="text-sm font-bold">Durée : <span id="trip_time" class="text-2xl text-slate-800"></span></p>
+            </div>
+          </article>
 
-        <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-red-700 mb-3 flex items-center gap-2">
-            <i class="fas fa-fire text-red-500"></i>
-            Besoins caloriques
-          </h3>
-          <div class="space-y-3">
-            <select id="calories_gender" class="w-full p-3 border rounded-lg">
-              <option value="male">Homme</option>
-              <option value="female">Femme</option>
-            </select>
-            <input id="calories_weight" type="number" placeholder="Poids (kg)" class="w-full p-3 border rounded-lg" />
-            <input id="calories_age" type="number" placeholder="Âge" class="w-full p-3 border rounded-lg" />
-            <button onclick="calcCalories()" class="btn-soft w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg">
-              Calculer
-            </button>
-          </div>
-          <div id="calories_result" class="hidden mt-4 p-3 bg-red-50 rounded-lg">
-            <p class="text-sm font-bold">Besoins estimés : <span id="calories_value" class="text-red-700"></span> kcal/jour</p>
-          </div>
-        </article>
-      </div>
-    </section>
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-sky-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-gas-pump text-sky-500"></i>
+              Coût essence
+            </h3>
+            <div class="space-y-3">
+              <input id="fuel_distance" type="number" placeholder="Distance (km)" class="w-full p-3 border rounded-lg" />
+              <input id="fuel_consumption" type="number" step="0.1" placeholder="Consommation (L/100km)" class="w-full p-3 border rounded-lg" />
+              <input id="fuel_price" type="number" step="0.01" placeholder="Prix essence (€/L)" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcFuel()" class="btn-soft w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="fuel_result" class="hidden mt-4 p-3 bg-sky-50 rounded-lg">
+              <p class="text-sm font-bold">Coût : <span id="fuel_cost" class="text-2xl text-sky-700"></span></p>
+              <p class="text-sm">Litres : <span id="fuel_liters" class="text-sky-700"></span></p>
+            </div>
+          </article>
+        </div>
+      </section>
 
-    <!-- FOOTER LINKS -->
-    <div class="text-center text-sm text-slate-500 mt-12">
-      <a href="mentions-legales.html" class="underline hover:text-blue-600">Mentions légales</a>
-    </div>
-  </main>
+      <!-- SANTÉ -->
+      <section id="sante">
+        <h2 class="text-2xl md:text-3xl font-black mb-4">Santé</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-pink-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-weight-scale text-pink-500"></i>
+              IMC (Indice de Masse Corporelle)
+            </h3>
+            <div class="space-y-3">
+              <input id="imc_weight" type="number" placeholder="Poids (kg)" class="w-full p-3 border rounded-lg" />
+              <input id="imc_height" type="number" placeholder="Taille (cm)" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcIMC()" class="btn-soft w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="imc_result" class="hidden mt-4 p-3 bg-pink-50 rounded-lg">
+              <p class="text-sm font-bold">Votre IMC : <span id="imc_value" class="text-2xl text-pink-700"></span></p>
+              <p class="text-sm">Catégorie : <span id="imc_category" class="text-pink-700"></span></p>
+            </div>
+          </article>
 
-  <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-200 py-8">
-    <div class="max-w-6xl mx-auto px-4 text-center text-sm">
-      <p>© 2024 Calcul-Rapide.online | Tous droits réservés</p>
-    </div>
-  </footer>
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-red-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-fire text-red-500"></i>
+              Besoins caloriques
+            </h3>
+            <div class="space-y-3">
+              <select id="calories_gender" class="w-full p-3 border rounded-lg">
+                <option value="male">Homme</option>
+                <option value="female">Femme</option>
+              </select>
+              <input id="calories_weight" type="number" placeholder="Poids (kg)" class="w-full p-3 border rounded-lg" />
+              <input id="calories_age" type="number" placeholder="Âge" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcCalories()" class="btn-soft w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="calories_result" class="hidden mt-4 p-3 bg-red-50 rounded-lg">
+              <p class="text-sm font-bold">Besoins : <span id="calories_value" class="text-2xl text-red-700"></span> kcal/jour</p>
+            </div>
+          </article>
+        </div>
+      </section>
 
-  <!-- JAVASCRIPT -->
-  <script>
-    // SALAIRE BRUT -> NET
-    function calcSalaire() {
-      const brut = parseFloat(document.getElementById('sal_brut').value);
-      if (brut) {
-        const net = brut * 0.77; // Approximation
-        document.getElementById('sal_net').textContent = net.toFixed(2) + ' €';
-        document.getElementById('sal_result').classList.remove('hidden');
-      }
-    }
+      <!-- QUOTIDIEN -->
+      <section id="quotidien">
+        <h2 class="text-2xl md:text-3xl font-black mb-4">Quotidien</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+          
+          <!-- POURBOIRE -->
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-emerald-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-hand-holding-dollar text-emerald-500"></i>
+              Pourboire
+            </h3>
+            <div class="space-y-3">
+              <input id="tip_bill" type="number" placeholder="Montant addition (€)" class="w-full p-3 border rounded-lg" />
+              <input id="tip_rate" type="number" placeholder="Pourboire (%)" value="10" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcTip()" class="btn-soft w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="tip_result" class="hidden mt-4 p-3 bg-emerald-50 rounded-lg">
+              <p class="text-sm font-bold">Pourboire : <span id="tip_amount" class="text-2xl text-emerald-700"></span></p>
+              <p class="text-sm">Total : <span id="tip_total" class="text-emerald-700"></span></p>
+            </div>
+          </article>
 
-    // PRÊT IMMOBILIER
-    function calcLoan() {
-      const capital = parseFloat(document.getElementById('loan_capital').value);
-      const years = parseFloat(document.getElementById('loan_years').value);
-      const rate = parseFloat(document.getElementById('loan_rate').value);
-      if (capital && years && rate) {
-        const monthlyRate = rate / 100 / 12;
-        const months = years * 12;
-        const monthly = (capital * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
-        document.getElementById('loan_monthly').textContent = monthly.toFixed(2) + ' €';
-        document.getElementById('loan_result').classList.remove('hidden');
-      }
-    }
+          <!-- POURCENTAGE -->
+          <article class="calc-card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-lg font-black text-cyan-700 mb-3 flex items-center gap-2">
+              <i class="fas fa-percent text-cyan-500"></i>
+              Pourcentage
+            </h3>
+            <div class="space-y-3">
+              <input id="pct_value" type="number" placeholder="Valeur" class="w-full p-3 border rounded-lg" />
+              <input id="pct_rate" type="number" placeholder="Pourcentage (%)" class="w-full p-3 border rounded-lg" />
+              <button onclick="calcPercentage()" class="btn-soft w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 rounded-lg">
+                Calculer
+              </button>
+            </div>
+            <div id="pct_result" class="hidden mt-4 p-3 bg-cyan-50 rounded-lg">
+              <p class="text-sm font-bold">Résultat : <span id="pct_amount" class="text-2xl text-cyan-700"></span></p>
+            </div>
+          </article>
 
-    // TVA
-    function calcTVA() {
-      const ht = parseFloat(document.getElementById('tva_ht').value);
-      const rate = parseFloat(document.getElementById('tva_rate').value);
-      if (ht && rate) {
-        const ttc = ht * (1 + rate / 100);
-        document.getElementById('tva_ttc').textContent = ttc.toFixed(2) + ' €';
-        document.getElementById('tva_result').classList.remove('hidden');
-      }
-    }
+        </div>
+      </section>
 
-    // CHÔMAGE (ARE)
-    function calcARE() {
-      const brut = parseFloat(document.getElementById('are_brut').value);
-      if (brut) {
-        const are = brut * 0.57; // Approximation
-        document.getElementById('are_monthly').textContent = are.toFixed(2) + ' €';
-        document.getElementById('are_result').classList.remove('hidden');
-      }
-    }
+    </main>
+  </div>
 
-    // DURÉE TRAJET
-    function calcTrip() {
-      const distance = parseFloat(document.getElementById('trip_distance').value);
-      const speed = parseFloat(document.getElementById('trip_speed').value);
-      if (distance && speed) {
-        const hours = distance / speed;
-        const h = Math.floor(hours);
-        const m = Math.round((hours - h) * 60);
-        document.getElementById('trip_time').textContent = `${h}h${m}m`;
-        document.getElementById('trip_result').classList.remove('hidden');
-      }
-    }
+  <!-- PAGE MENTIONS LÉGALES -->
+  <div id="mentions" class="page-section">
+    <main class="max-w-4xl mx-auto px-4 py-10">
+      <h1 class="text-3xl font-black mb-6 text-slate-900">Mentions légales</h1>
 
-    // COÛT ESSENCE
-    function calcFuel() {
-      const distance = parseFloat(document.getElementById('fuel_distance').value);
-      const consumption = parseFloat(document.getElementById('fuel_consumption').value);
-      const price = parseFloat(document.getElementById('fuel_price').value);
-      if (distance && consumption && price) {
-        const cost = (distance * consumption / 100) * price;
-        document.getElementById('fuel_cost').textContent = cost.toFixed(2) + ' €';
-        document.getElementById('fuel_result').classList.remove('hidden');
-      }
-    }
+      <div class="space-y-6 text-slate-700">
+        
+        <!-- Éditeur -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold mb-3 text-slate-900">Éditeur du site</h2>
+          <p class="mb-1"><strong>Nom du site :</strong> Calcul-Rapide.online</p>
+          <p class="mb-1"><strong>Hébergeur :</strong> Netlify, Inc.</p>
+          <p><strong>Contact :</strong> À compléter</p>
+        </section>
 
-    // IMC
-    function calcIMC() {
-      const weight = parseFloat(document.getElementById('imc_weight').value);
-      const height = parseFloat(document.getElementById('imc_height').value);
-      if (weight && height) {
-        const imc = weight / Math.pow(height / 100, 2);
-        document.getElementById('imc_value').textContent = imc.toFixed(1);
-        document.getElementById('imc_result').classList.remove('hidden');
-      }
-    }
+        <!-- Propriété Intellectuelle -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold mb-3 text-slate-900">Propriété intellectuelle</h2>
+          <p>Tous les contenus présents sur le site <strong>Calcul-Rapide.online</strong> (textes, images, code source) sont la propriété exclusive de l'éditeur, sauf mention contraire.</p>
+          <p class="mt-2">Toute reproduction ou utilisation sans autorisation est interdite.</p>
+        </section>
 
-    // BESOINS CALORIQUES
-    function calcCalories() {
-      const gender = document.getElementById('calories_gender').value;
-      const weight = parseFloat(document.getElementById('calories_weight').value);
-      const age = parseFloat(document.getElementById('calories_age').value);
-      if (weight && age) {
-        let bmr;
-        if (gender === 'male') {
-          bmr = 10 * weight + 6.25 * 175 - 5 * age + 5; // Taille moyenne homme
-        } else {
-          bmr = 10 * weight + 6.25 * 165 - 5 * age - 161; // Taille moyenne femme
-        }
-        document.getElementById('calories_value').textContent = Math.round(bmr);
-        document.getElementById('calories_result').classList.remove('hidden');
-      }
-    }
-  </script>
-</body>
-            </html>
+        <!-- Responsabilité -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold mb-3 text-slate-900">Responsabilité</h2>
+          <p>Les calculateurs disponibles sur ce site fournissent des <strong>estimations</strong> à titre indicatif.</p>
+          <p class="mt-2">L'éditeur ne saurait être tenu responsable des erreurs de calcul ou des dommages résultant de l'utilisation de ces outils.</p>
+          <p class="mt-2">Pour des calculs officiels, consultez les sites gouvernementaux ou des professionnels qualifiés.</p>
+        </section>
+
+        <!-- Confidentialité -->
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold mb-3 text-slate-900">Confidentialité & Cookies</h2>
+          <p>Ce site ne collecte aucune donnée personnelle sensible via ses calculateurs (les calculs se font dans votre navigateur).</p>
+          <p class="mt-2">Cependant, des services tiers (comme Google AdSense ou Ana
