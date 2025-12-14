@@ -137,4 +137,294 @@
       <label class="block text-xs font-semibold text-slate-500 mb-1">
         Salaire brut mensuel (€)
       </label>
-      <input id="brut" type="number" placeholder="Ex : 
+      <input id="brut" type="number" placeholder="Ex : 2200"
+             class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-blue-500">
+      <button onclick="calcSalaire()"
+              class="btn-calc w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-3 rounded-xl">
+        Calculer le net estimé
+      </button>
+      <div id="res-salaire"
+           class="hidden mt-4 p-3 rounded-xl bg-blue-50 border border-blue-100 text-center">
+        <p class="text-[11px] text-blue-700 font-semibold uppercase tracking-widest">
+          Résultat estimé
+        </p>
+        <p id="net-result" class="text-2xl font-black text-blue-700 mt-1"></p>
+        <p class="text-[10px] text-blue-500 mt-1">
+          Approximation basée sur un salarié du privé hors impôt sur le revenu.
+        </p>
+      </div>
+    </section>
+
+    <!-- PRET IMMO -->
+    <section id="pret" class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+      <h3 class="text-lg font-black text-indigo-700 mb-3">
+        🏠 Mensualité de prêt immobilier
+      </h3>
+      <label class="block text-xs font-semibold text-slate-500 mb-1">Montant emprunté (€)</label>
+      <input id="capital" type="number" placeholder="Ex : 200000"
+             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-indigo-500">
+
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Durée (années)</label>
+          <input id="duree" type="number" placeholder="20"
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Taux (%)</label>
+          <input id="taux" type="number" placeholder="3.5" step="0.01"
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-indigo-500">
+        </div>
+      </div>
+
+      <button onclick="calcPret()"
+              class="btn-calc w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-3 rounded-xl">
+        Calculer la mensualité
+      </button>
+      <div id="res-pret"
+           class="hidden mt-4 p-3 rounded-xl bg-indigo-50 border border-indigo-100 text-center">
+        <p class="text-[11px] text-indigo-700 font-semibold uppercase tracking-widest">
+          Mensualité estimée
+        </p>
+        <p id="pret-result" class="text-2xl font-black text-indigo-700 mt-1"></p>
+      </div>
+    </section>
+
+    <!-- TVA -->
+    <section id="tva" class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+      <h3 class="text-lg font-black text-orange-600 mb-3">
+        📈 Calcul de TVA
+      </h3>
+      <label class="block text-xs font-semibold text-slate-500 mb-1">Montant HT (€)</label>
+      <input id="ht" type="number" placeholder="Ex : 100"
+             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-orange-500">
+
+      <label class="block text-xs font-semibold text-slate-500 mb-1">Taux de TVA</label>
+      <select id="taux-tva"
+              class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-orange-500">
+        <option value="20">20% (taux normal)</option>
+        <option value="10">10% (restauration, travaux...)</option>
+        <option value="5.5">5,5% (produits essentiels)</option>
+      </select>
+
+      <button onclick="calcTVA()"
+              class="btn-calc w-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold py-3 rounded-xl">
+        Calculer TTC
+      </button>
+      <div id="res-tva"
+           class="hidden mt-4 p-3 rounded-xl bg-orange-50 border border-orange-100 text-center text-sm font-semibold text-orange-700">
+      </div>
+    </section>
+
+    <!-- IMC -->
+    <section id="imc" class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+      <h3 class="text-lg font-black text-pink-600 mb-3">
+        ⚖️ IMC (Indice de Masse Corporelle)
+      </h3>
+      <div class="grid grid-cols-2 gap-2 mb-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Poids (kg)</label>
+          <input id="poids" type="number" placeholder="70"
+                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-pink-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Taille (cm)</label>
+          <input id="taille" type="number" placeholder="175"
+                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-pink-500">
+        </div>
+      </div>
+      <button onclick="calcIMC()"
+              class="btn-calc w-full bg-pink-500 hover:bg-pink-600 text-white text-sm font-bold py-3 rounded-xl">
+        Calculer mon IMC
+      </button>
+      <div id="res-imc"
+           class="hidden mt-4 p-3 rounded-xl bg-pink-50 border border-pink-100 text-center text-sm font-semibold text-pink-700">
+      </div>
+    </section>
+
+    <!-- CALORIES -->
+    <section id="calories" class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+      <h3 class="text-lg font-black text-red-600 mb-3">
+        🔥 Besoins caloriques (estimés)
+      </h3>
+      <label class="block text-xs font-semibold text-slate-500 mb-1">Sexe</label>
+      <select id="sexe" class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-red-500">
+        <option value="homme">Homme</option>
+        <option value="femme">Femme</option>
+      </select>
+      <div class="grid grid-cols-2 gap-2 mb-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Poids (kg)</label>
+          <input id="poids-cal" type="number" placeholder="70"
+                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-red-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-500 mb-1">Âge (ans)</label>
+          <input id="age" type="number" placeholder="30"
+                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-red-500">
+        </div>
+      </div>
+      <button onclick="calcCalories()"
+              class="btn-calc w-full bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-3 rounded-xl">
+        Calculer mes besoins
+      </button>
+      <div id="res-calories"
+           class="hidden mt-4 p-3 rounded-xl bg-red-50 border border-red-100 text-center text-sm font-semibold text-red-700">
+      </div>
+    </section>
+
+    <!-- POURBOIRE -->
+    <section id="pourboire" class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+      <h3 class="text-lg font-black text-emerald-600 mb-3">
+        💵 Calculateur de pourboire
+      </h3>
+      <label class="block text-xs font-semibold text-slate-500 mb-1">Montant de l'addition (€)</label>
+      <input id="montant-add" type="number" placeholder="Ex : 56.80"
+             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
+      <label class="block text-xs font-semibold text-slate-500 mb-1">Pourcentage de pourboire (%)</label>
+      <input id="taux-pourb" type="number" placeholder="Ex : 10" value="10"
+             class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
+      <button onclick="calcPourboire()"
+              class="btn-calc w-full bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold py-3 rounded-xl">
+        Calculer le pourboire
+      </button>
+      <div id="res-pourboire"
+           class="hidden mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-center text-sm font-semibold text-emerald-700">
+      </div>
+    </section>
+
+  </div>
+
+  <!-- BLOC PUB BAS -->
+  <div class="mt-6">
+    <div class="h-32 rounded-xl border-2 border-dashed border-slate-300 bg-slate-100 text-[11px] flex items-center justify-center text-slate-400">
+      Emplacement futur pour un bloc Google AdSense (carré)
+    </div>
+  </div>
+</section>
+
+<!-- SECTION TEXTE / SEO / À PROPOS -->
+<section id="apropos" class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-xl md:text-2xl font-black text-slate-900 mb-3">
+    Pourquoi utiliser Calcul-Rapide.online ?
+  </h2>
+  <p class="text-sm text-slate-600 mb-3">
+    Calcul-Rapide.online est un site pensé pour vous faire gagner du temps au quotidien.
+    Plus besoin de chercher plusieurs outils différents : ici, vous trouvez l'essentiel
+    au même endroit. Chaque calculateur est simple, rapide et basé sur des formules
+    reconnues (TVA, prêt immobilier, IMC, etc.).
+  </p>
+  <p class="text-sm text-slate-600 mb-3">
+    Le site ne nécessite aucune inscription, ne stocke pas vos données personnelles et est
+    optimisé pour fonctionner aussi bien sur mobile que sur ordinateur. Vous pouvez donc
+    l'utiliser au travail, à la maison ou en déplacement.
+  </p>
+  <p class="text-sm text-slate-600">
+    Notre objectif : devenir votre réflexe n°1 dès que vous avez un calcul à faire,
+    que ce soit pour votre salaire, un crédit, votre santé ou simplement laisser un bon
+    pourboire au restaurant.
+  </p>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact" class="bg-slate-900 text-slate-100 mt-10">
+  <div class="max-w-6xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-6 text-sm">
+    <div>
+      <p class="font-black text-lg">Calcul-Rapide.online</p>
+      <p class="text-slate-400 text-xs mt-1">
+        Suite de calculateurs en ligne, gratuits et accessibles 24h/24.
+      </p>
+    </div>
+    <div>
+      <p class="font-semibold mb-2 text-slate-200">Liens utiles</p>
+      <a href="#calculateurs" class="block text-slate-400 hover:text-white text-xs mb-1">Calculateurs</a>
+      <a href="#apropos" class="block text-slate-400 hover:text-white text-xs mb-1">À propos</a>
+    </div>
+    <div>
+      <p class="font-semibold mb-2 text-slate-200">Contact</p>
+      <p class="text-slate-400 text-xs">
+        Pour toute question ou suggestion, ajoute un e-mail de contact dans le futur.<br>
+        (ex : contact@calcul-rapide.online)
+      </p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-center text-[11px] text-slate-500 py-3">
+    © 2024–2027 Calcul-Rapide.online – Tous droits réservés.
+  </div>
+</footer>
+
+<!-- JS LOGIQUE DES CALCULS + NAV -->
+<script>
+  // Changer de calculateur (onglets)
+  function showCalc(id, btn) {
+    document.querySelectorAll(".calc-card").forEach(c => c.classList.remove("active"));
+    document.querySelectorAll(".btn-nav").forEach(b => b.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    btn.classList.add("active");
+    window.scrollTo({ top: document.getElementById("calculateurs").offsetTop - 70, behavior: "smooth" });
+  }
+
+  // Salaire brut → net (approx)
+  function calcSalaire() {
+    const brut = parseFloat(document.getElementById("brut").value);
+    if (!isNaN(brut) && brut > 0) {
+      const net = brut * 0.77;
+      document.getElementById("net-result").textContent = net.toFixed(2) + " €";
+      document.getElementById("res-salaire").classList.remove("hidden");
+    }
+  }
+
+  // Prêt immo
+  function calcPret() {
+    const capital = parseFloat(document.getElementById("capital").value);
+    const duree = parseFloat(document.getElementById("duree").value);
+    const taux = parseFloat(document.getElementById("taux").value);
+    if (!isNaN(capital) && !isNaN(duree) && !isNaN(taux) && capital > 0 && duree > 0 && taux > 0) {
+      const n = duree * 12;
+      const r = taux / 100 / 12;
+      const mensualite = (capital * r) / (1 - Math.pow(1 + r, -n));
+      document.getElementById("pret-result").textContent = mensualite.toFixed(2) + " € / mois";
+      document.getElementById("res-pret").classList.remove("hidden");
+    }
+  }
+
+  // TVA
+  function calcTVA() {
+    const ht = parseFloat(document.getElementById("ht").value);
+    const taux = parseFloat(document.getElementById("taux-tva").value);
+    if (!isNaN(ht) && !isNaN(taux) && ht > 0) {
+      const tva = ht * (taux / 100);
+      const ttc = ht + tva;
+      document.getElementById("res-tva").innerHTML =
+        "Montant TTC : " + ttc.toFixed(2) + " €<br>" +
+        "Dont TVA : " + tva.toFixed(2) + " €";
+      document.getElementById("res-tva").classList.remove("hidden");
+    }
+  }
+
+  // IMC
+  function calcIMC() {
+    const p = parseFloat(document.getElementById("poids").value);
+    const t = parseFloat(document.getElementById("taille").value) / 100;
+    if (!isNaN(p) && !isNaN(t) && p > 0 && t > 0) {
+      const imc = p / (t * t);
+      let cat = "";
+      if (imc < 18.5) cat = "Maigreur";
+      else if (imc < 25) cat = "Corpulence normale";
+      else if (imc < 30) cat = "Surpoids";
+      else cat = "Obésité";
+      document.getElementById("res-imc").innerHTML =
+        "IMC : " + imc.toFixed(1) + "<br>Catégorie : " + cat;
+      document.getElementById("res-imc").classList.remove("hidden");
+    }
+  }
+
+  // Calories (très simplifié)
+  function calcCalories() {
+    const p = parseFloat(document.getElementById("poids-cal").value);
+    const a = parseInt(document.getElementById("age").value, 10);
+    const s = document.getElementById("sexe").value;
+    if (!isNaN(p) && !isNaN(a) && p > 0 && a > 0) {
+      let bmr;
+      if (s === "homme") {
+        bmr = 10 * p + 6.25 * 175 - 5 * a + 5;    // taille moyen
