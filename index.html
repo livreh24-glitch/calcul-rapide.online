@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul-Rapide.online | Tous vos outils de calcul gratuits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .calc-card { display: none; }
+        .calc-card.active { display: block; animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .btn-nav.active { background-color: #3b82f6; color: white; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans pb-20">
+
+    <!-- Header -->
+    <header class="bg-blue-700 text-white p-6 shadow-xl text-center">
+        <h1 class="text-3xl font-black tracking-tight">CALCUL-RAPIDE<span class="text-blue-300">.online</span></h1>
+        <p class="text-xs mt-1 uppercase tracking-widest opacity-80">L'outil tout-en-un pour 2024-2027</p>
+    </header>
+
+    <!-- Zone Pub Haut -->
+    <div class="max-w-4xl mx-auto mt-4 px-4">
+        <div class="bg-white border-2 border-dashed border-gray-300 h-20 flex items-center justify-center text-gray-400 text-xs rounded-lg">
+            PUBLICITÉ ADSENSE (BANDEAU HORIZONTAL)
+        </div>
+    </div>
+
+    <!-- Menu des catégories -->
+    <div class="max-w-4xl mx-auto p-4 flex gap-2 overflow-x-auto no-scrollbar">
+        <button onclick="showCalc('salaire')" class="btn-nav active whitespace-nowrap px-4 py-2 bg-white rounded-full shadow-sm border font-medium">💰 Salaire</button>
+        <button onclick="showCalc('pret')" class="btn-nav whitespace-nowrap px-4 py-2 bg-white rounded-full shadow-sm border font-medium">🏠 Immobilier</button>
+        <button onclick="showCalc('chomage')" class="btn-nav whitespace-nowrap px-4 py-2 bg-white rounded-full shadow-sm border font-medium">🛡️ Chômage</button>
+        <button onclick="showCalc('tva')" class="btn-nav whitespace-nowrap px-4 py-2 bg-white rounded-full shadow-sm border font-medium">📈 TVA</button>
+        <button onclick="showCalc('imc')" class="btn-nav whitespace-nowrap px-4 py-2 bg-white rounded-full shadow-sm border font-medium">⚖️ IMC</button>
+        <button onclick="showCalc('calories')" class="btn-nav whitespace-nowrap px-4 py-2 bg-white rounded-full shadow-sm border font-medium">🔥 Calories</button>
+        <button onclick="showCalc('auto')" class="btn-nav whitespace-nowrap px-4 py-2 bg-white rounded-full shadow-sm border font-medium">🚗 Auto</button>
+    </div>
+
+    <main class="max-w-2xl mx-auto px-4">
+
+        <!-- 1. SALAIRE -->
+        <section id="salaire" class="calc-card active bg-white p-6 rounded-2xl shadow-lg border">
+            <h2 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-wallet mr-2 text-blue-600"></i> Brut en Net</h2>
+            <input type="number" id="brut" placeholder="Salaire Brut mensuel (€)" class="w-full p-4 border-2 rounded-xl mb-4 text-lg focus:border-blue-500 outline-none">
+            <button onclick="calcSalaire()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-xl">Calculer</button>
+            <div id="res-salaire" class="hidden mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200 text-center">
+                <p class="text-gray-600">Salaire Net Estimé (avant impôts) :</p>
+                <p id="net-result" class="text-4xl font-black text-blue-700"></p>
+            </div>
+        </section>
+
+        <!-- 2. PRÊT IMMO -->
+        <section id="pret" class="calc-card bg-white p-6 rounded-2xl shadow-lg border">
+            <h2 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-home mr-2 text-indigo-600"></i> Prêt Immobilier</h2>
+            <input type="number" id="capital" placeholder="Montant du prêt (€)" class="w-full p-4 border-2 rounded-xl mb-3">
+            <input type="number" id="taux" placeholder="Taux d'intérêt (%) ex: 3.5" class="w-full p-4 border-2 rounded-xl mb-3">
+            <input type="number" id="duree" placeholder="Durée (en années)" class="w-full p-4 border-2 rounded-xl mb-4">
+            <button onclick="calcPret()" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-bold text-xl">Calculer Mensualité</button>
+            <div id="res-pret" class="hidden mt-6 p-4 bg-indigo-50 rounded-xl text-center">
+                <p id="pret-result" class="text-3xl font-black text-indigo-700"></p>
+            </div>
+        </section>
+
+        <!-- 3. CHÔMAGE -->
+        <section id="chomage" class="calc-card bg-white p-6 rounded-2xl shadow-lg border">
+            <h2 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-shield-alt mr-2 text-green-600"></i> Aide Chômage (ARE)</h2>
+            <input type="number" id="brut-ch" placeholder="Moyenne des derniers salaires bruts" class="w-full p-4 border-2 rounded-xl mb-4">
+            <button onclick="calcChomage()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-xl">Estimer mes droits</button>
+            <div id="res-chomage" class="hidden mt-6 p-4 bg-green-50 rounded-xl text-center">
+                <p id="chomage-result" class="text-3xl font-black text-green-700"></p>
+            </div>
+        </section>
+
+        <!-- 4. TVA -->
+        <section id="tva" class="calc-card bg-white p-6 rounded-2xl shadow-lg border">
+            <h2 class="text-2xl font-bold mb-4 text-orange-600">Calcul TVA</h2>
+            <input type="number" id="ht" placeholder="Montant HT (€)" class="w-full p-4 border-2 rounded-xl mb-3">
+            <select id="taux-tva" class="w-full p-4 border-2 rounded-xl mb-4">
+                <option value="20">TVA 20% (Standard)</option>
+                <option value="10">TVA 10% (Resto)</option>
+                <option value="5.5">TVA 5.5% (Essentiel)</option>
+            </select>
+            <button onclick="calcTVA()" class="w-full bg-orange-600 text-white py-4 rounded-xl font-bold text-xl">Calculer TTC</button>
+            <div id="res-tva" class="hidden mt-6 p-4 bg-orange-50 rounded-xl text-center text-2xl font-bold text-orange-700"></div>
+        </section>
+
+        <!-- 5. IMC -->
+        <section id="imc" class="calc-card bg-white p-6 rounded-2xl shadow-lg border">
+            <h2 class="text-2xl font-bold mb-4 text-pink-600">Calcul IMC</h2>
+            <input type="number" id="poids" placeholder="Poids (kg)" class="w-full p-4 border-2 rounded-xl mb-3">
+            <input type="number" id="taille" placeholder="Taille (cm) ex: 175" class="w-full p-4 border-2 rounded-xl mb-4">
+            <button onclick="calcIMC()" class="w-full bg-pink-600 text-white py-4 rounded-xl font-bold text-xl">Mon IMC</button>
+            <div id="res-imc" class="hidden mt-6 p-4 bg-pink-50 rounded-xl text-center font-bold text-pink-700"></div>
+        </section>
+
+        <!-- ZONE PUB BAS -->
+        <div class="mt-8">
+            <div class="bg-white border-2 border-dashed border-gray-300 h-40 flex items-center justify-center text-gray-400 text-xs rounded-lg uppercase">
+                PUB ADSENSE (CARRE)
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer / Mentions -->
+    <footer class="mt-12 p-8 text-center text-gray-500 text-sm">
+        <p>© 2024-2027 Calcul-Rapide.online</p>
+        <div class="flex justify-center gap-4 mt-2">
+            <a href="#" class="underline">Mentions Légales</a>
+            <a href="#" class="underline">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        function showCalc(id) {
+            document.querySelectorAll('.calc-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function calcSalaire() {
+            let b = document.getElementById('brut').value;
+            if(b > 0) {
+                document.getElementById('net-result').innerText = (b * 0.77).toFixed(2) + " €";
+                document.getElementById('res-salaire').classList.remove('hidden');
+            }
+        }
+
+        function calcPret() {
+            let cap = document.getElementById('capital').value;
+            let t = (document.getElementById('taux').value / 100) / 12;
+            let d = document.getElementById('duree').value * 12;
+            if(cap > 0 && t > 0) {
+                let m = (cap * t) / (1 - Math.pow(1 + t, -d));
+                document.getElementById('pret-result').innerText = m.toFixed(2) + " € / mois";
+                document.getElementById('res-pret').classList.remove('hidden');
+            }
+        }
+
+        function calcChomage() {
+            let s = document.getElementById('brut-ch').value;
+            if(s > 0) {
+                document.getElementById('chomage-result').innerText = (s * 0.57).toFixed(2) + " € / mois";
+                document.getElementById('res-chomage').classList.remove('hidden');
+            }
+        }
+
+        function calcTVA() {
+            let ht = parseFloat(document.getElementById('ht').value);
+            let tx = parseFloat(document.getElementById('taux-tva').value);
+            if(ht > 0) {
+                let ttc = ht * (1 + tx/100);
+                document.getElementById('res-tva').innerHTML = `TTC : ${ttc.toFixed(2)} € <br> <span class="text-sm">TVA : ${(ttc-ht).toFixed(2)} €</span>`;
+                document.getElementById('res-tva').classList.remove('hidden');
+            }
+        }
+
+        function calcIMC() {
+            let p = document.getElementById('poids').value;
+            let t = document.getElementById('taille').value / 100;
+            if(p > 0 && t > 0) {
+                let imc = (p / (t * t)).toFixed(1);
+                let cat = "";
+                if(imc < 18.5) cat = "Maigreur";
+                else if(imc < 25) cat = "Normale";
+                else if(imc < 30) cat = "Surpoids";
+                else cat = "Obésité";
+                document.getElementById('res-imc').innerHTML = `IMC : ${imc} (${cat})`;
+                document.getElementById('res-imc').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+  </html>
