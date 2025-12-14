@@ -4,26 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcul-Rapide.online | Tous vos outils de calcul gratuits</title>
-    <!-- Tailwind CSS pour un design pro -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .calc-card { display: none; }
-        .calc-card.active { display: block; animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .calc-card.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .btn-nav.active { background-color: #1d4ed8; color: white; border-color: #1d4ed8; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .btn-calc { transition: all 0.3s ease; }
+        .btn-calc:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .feature-card { transition: all 0.3s ease; }
+        .feature-card:hover { transform: scale(1.05); }
+        .logo-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .hero-slide-in { animation: slideIn 0.8s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans pb-10">
+<body class="bg-gray-50 text-gray-900 font-sans">
 
-    <!-- HEADER AVEC LOGO -->
+    <!-- HEADER AVEC LOGO ANIMÉ -->
     <header class="bg-white border-b shadow-sm sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <div class="bg-blue-600 text-white p-2 rounded-lg shadow-md">
+                <div class="bg-blue-600 text-white p-2 rounded-lg shadow-md logo-pulse">
                     <i class="fas fa-calculator text-xl"></i>
                 </div>
                 <div>
@@ -32,10 +38,40 @@
                 </div>
             </div>
             <div class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold uppercase tracking-wider">
-                V 2.0
+                V 3.0
             </div>
         </div>
     </header>
+
+    <!-- SECTION HERO (BANNIÈRE D'ACCUEIL) -->
+    <section class="bg-gradient-to-br from-blue-500 to-blue-700 text-white text-center py-16 px-4 hero-slide-in">
+        <h1 class="text-4xl font-black mb-4">L'outil de calcul le plus complet du web</h1>
+        <p class="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+            De la finance à la santé, calculez tout ce dont vous avez besoin en un seul clic. Rapide, gratuit et sans publicité intrusive.
+        </p>
+        <a href="#main-content" class="bg-white text-blue-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-all">
+            Commencer à calculer
+        </a>
+    </section>
+
+    <!-- SECTION "POURQUOI NOUS ?" -->
+    <section class="max-w-4xl mx-auto p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="feature-card bg-white p-6 rounded-2xl shadow-md border text-center">
+            <i class="fas fa-tachometer-alt text-3xl text-blue-600 mb-4"></i>
+            <h3 class="font-bold text-lg">Ultra-Rapide</h3>
+            <p class="text-sm text-gray-600">Obtenez vos résultats instantanément, sans attente.</p>
+        </div>
+        <div class="feature-card bg-white p-6 rounded-2xl shadow-md border text-center">
+            <i class="fas fa-gift text-3xl text-green-600 mb-4"></i>
+            <h3 class="font-bold text-lg">100% Gratuit</h3>
+            <p class="text-sm text-gray-600">Tous nos outils sont accessibles sans aucun coût.</p>
+        </div>
+        <div class="feature-card bg-white p-6 rounded-2xl shadow-md border text-center">
+            <i class="fas fa-shield-alt text-3xl text-purple-600 mb-4"></i>
+            <h3 class="font-bold text-lg">Sécurisé</h3>
+            <p class="text-sm text-gray-600">Vos données restent sur votre appareil. Aucune trace.</p>
+        </div>
+    </section>
 
     <!-- ZONE PUB HAUT -->
     <div class="max-w-4xl mx-auto mt-4 px-4">
@@ -45,7 +81,7 @@
     </div>
 
     <!-- MENU DE NAVIGATION HORIZONTAL -->
-    <nav class="max-w-4xl mx-auto p-4 flex gap-3 overflow-x-auto no-scrollbar">
+    <nav id="main-content" class="max-w-4xl mx-auto p-4 flex gap-3 overflow-x-auto no-scrollbar">
         <button onclick="showCalc('salaire', this)" class="btn-nav active whitespace-nowrap px-5 py-2 bg-white rounded-xl shadow-sm border-2 font-bold transition-all">💰 Salaire</button>
         <button onclick="showCalc('chomage', this)" class="btn-nav whitespace-nowrap px-5 py-2 bg-white rounded-xl shadow-sm border-2 font-bold transition-all">🛡️ Chômage</button>
         <button onclick="showCalc('pret', this)" class="btn-nav whitespace-nowrap px-5 py-2 bg-white rounded-xl shadow-sm border-2 font-bold transition-all">🏠 Immo</button>
@@ -59,198 +95,72 @@
 
         <!-- 1. SALAIRE -->
         <section id="salaire" class="calc-card active bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
-            <h2 class="text-2xl font-black mb-6 text-blue-700 underline decoration-blue-200 underline-offset-8">Convertir Brut en Net</h2>
+            <h2 class="text-2xl font-black mb-6 text-blue-700">Convertir Brut en Net</h2>
             <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-bold text-gray-500 mb-1">Salaire Brut mensuel (€)</label>
-                    <input type="number" id="brut" placeholder="Ex: 2200" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl focus:border-blue-500 outline-none transition-all">
-                </div>
-                <button onclick="calcSalaire()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-2xl font-black text-xl shadow-lg shadow-blue-200 transition-all active:scale-95">CALCULER MON NET</button>
+                <div><label class="block text-sm font-bold text-gray-500 mb-1">Salaire Brut mensuel (€)</label><input type="number" id="brut" placeholder="Ex: 2200" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl focus:border-blue-500 outline-none transition-all"></div>
+                <button onclick="calcSalaire()" class="btn-calc w-full bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-2xl font-black text-xl shadow-lg">CALCULER MON NET</button>
             </div>
-            <div id="res-salaire" class="hidden mt-8 p-6 bg-blue-50 rounded-2xl border-2 border-blue-100 text-center animate-bounce">
-                <p class="text-blue-800 font-bold uppercase text-xs tracking-widest">Salaire Net Estimé</p>
-                <p id="net-result" class="text-5xl font-black text-blue-600 mt-2"></p>
-            </div>
+            <div id="res-salaire" class="hidden mt-8 p-6 bg-blue-50 rounded-2xl border-2 border-blue-100 text-center"><p class="text-blue-800 font-bold uppercase text-xs tracking-widest">Salaire Net Estimé</p><p id="net-result" class="text-5xl font-black text-blue-600 mt-2"></p></div>
         </section>
 
         <!-- 2. CHÔMAGE -->
         <section id="chomage" class="calc-card bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
             <h2 class="text-2xl font-black mb-6 text-green-700">Allocation Chômage</h2>
-            <div class="space-y-4">
-                <label class="block text-sm font-bold text-gray-500 mb-1">Dernier Salaire Brut Moyen (€)</label>
-                <input type="number" id="brut-ch" placeholder="Ex: 1800" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl outline-none">
-                <button onclick="calcChomage()" class="w-full bg-green-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg shadow-green-200">VOIR MES DROITS</button>
-            </div>
-            <div id="res-chomage" class="hidden mt-8 p-6 bg-green-50 rounded-2xl text-center">
-                <p id="chomage-result" class="text-4xl font-black text-green-700"></p>
-                <p class="text-green-600 text-xs mt-2 font-bold uppercase">Estimation mensuelle ARE</p>
-            </div>
+            <div class="space-y-4"><label class="block text-sm font-bold text-gray-500 mb-1">Dernier Salaire Brut Moyen (€)</label><input type="number" id="brut-ch" placeholder="Ex: 1800" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl outline-none"><button onclick="calcChomage()" class="btn-calc w-full bg-green-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg">VOIR MES DROITS</button></div>
+            <div id="res-chomage" class="hidden mt-8 p-6 bg-green-50 rounded-2xl text-center"><p id="chomage-result" class="text-4xl font-black text-green-700"></p><p class="text-green-600 text-xs mt-2 font-bold uppercase">Estimation mensuelle ARE</p></div>
         </section>
 
         <!-- 3. PRÊT IMMO -->
         <section id="pret" class="calc-card bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
             <h2 class="text-2xl font-black mb-6 text-indigo-700">Calcul Mensualité Prêt</h2>
-            <div class="space-y-3">
-                <input type="number" id="capital" placeholder="Montant du prêt (€)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="number" id="taux" placeholder="Taux (%)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none">
-                    <input type="number" id="duree" placeholder="Durée (ans)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none">
-                </div>
-                <button onclick="calcPret()" class="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg shadow-indigo-200">CALCULER</button>
-            </div>
-            <div id="res-pret" class="hidden mt-8 p-6 bg-indigo-50 rounded-2xl text-center">
-                <p id="pret-result" class="text-3xl font-black text-indigo-700"></p>
-            </div>
+            <div class="space-y-3"><input type="number" id="capital" placeholder="Montant du prêt (€)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none"><div class="grid grid-cols-2 gap-2"><input type="number" id="taux" placeholder="Taux (%)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none"><input type="number" id="duree" placeholder="Durée (ans)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none"></div><button onclick="calcPret()" class="btn-calc w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg">CALCULER</button></div>
+            <div id="res-pret" class="hidden mt-8 p-6 bg-indigo-50 rounded-2xl text-center"><p id="pret-result" class="text-3xl font-black text-indigo-700"></p></div>
         </section>
 
         <!-- 4. TVA -->
         <section id="tva" class="calc-card bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
-            <h2 class="text-2xl font-black mb-6 text-orange-700 font-black">Calcul TVA Express</h2>
-            <div class="space-y-4">
-                <input type="number" id="ht" placeholder="Montant Hors Taxe (€)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl outline-none">
-                <select id="taux-tva" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none font-bold">
-                    <option value="20">TVA 20% (Standard)</option>
-                    <option value="10">TVA 10% (Restauration)</option>
-                    <option value="5.5">TVA 5.5% (Essentiel)</option>
-                </select>
-                <button onclick="calcTVA()" class="w-full bg-orange-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg shadow-orange-200">CALCULER TTC</button>
-            </div>
+            <h2 class="text-2xl font-black mb-6 text-orange-700">Calcul TVA Express</h2>
+            <div class="space-y-4"><input type="number" id="ht" placeholder="Montant Hors Taxe (€)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl outline-none"><select id="taux-tva" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none font-bold"><option value="20">TVA 20% (Standard)</option><option value="10">TVA 10% (Restauration)</option><option value="5.5">TVA 5.5% (Essentiel)</option></select><button onclick="calcTVA()" class="btn-calc w-full bg-orange-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg">CALCULER TTC</button></div>
             <div id="res-tva" class="hidden mt-6 p-6 bg-orange-50 rounded-2xl text-center font-black text-orange-800 text-2xl"></div>
         </section>
 
         <!-- 5. IMC -->
         <section id="imc" class="calc-card bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
-            <h2 class="text-2xl font-black mb-6 text-pink-700 underline decoration-pink-200 underline-offset-8">Mon Score IMC</h2>
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <input type="number" id="poids" placeholder="Poids (kg)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none">
-                <input type="number" id="taille" placeholder="Taille (cm)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none">
-            </div>
-            <button onclick="calcIMC()" class="w-full bg-pink-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg shadow-pink-200">VOIR MON SCORE</button>
+            <h2 class="text-2xl font-black mb-6 text-pink-700">Mon Score IMC</h2>
+            <div class="grid grid-cols-2 gap-3 mb-4"><input type="number" id="poids" placeholder="Poids (kg)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none"><input type="number" id="taille" placeholder="Taille (cm)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none"></div><button onclick="calcIMC()" class="btn-calc w-full bg-pink-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg">VOIR MON SCORE</button>
             <div id="res-imc" class="hidden mt-6 p-6 bg-pink-50 rounded-2xl text-center font-black text-pink-800"></div>
         </section>
 
         <!-- 6. CALORIES -->
         <section id="calories" class="calc-card bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
             <h2 class="text-2xl font-black mb-6 text-red-700">Calcul Calories</h2>
-            <select id="sexe" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl mb-3 outline-none font-bold">
-                <option value="homme">👦 Homme</option>
-                <option value="femme">👧 Femme</option>
-            </select>
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <input type="number" id="poids-cal" placeholder="Poids (kg)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none">
-                <input type="number" id="age" placeholder="Âge" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none">
-            </div>
-            <button onclick="calcCalories()" class="w-full bg-red-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg shadow-red-200">CALCULER</button>
+            <select id="sexe" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl mb-3 outline-none font-bold"><option value="homme">👦 Homme</option><option value="femme">👧 Femme</option></select><div class="grid grid-cols-2 gap-3 mb-4"><input type="number" id="poids-cal" placeholder="Poids (kg)" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none"><input type="number" id="age" placeholder="Âge" class="p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl outline-none"></div><button onclick="calcCalories()" class="btn-calc w-full bg-red-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg">CALCULER</button>
             <div id="res-calories" class="hidden mt-6 p-6 bg-red-50 rounded-2xl text-center font-black text-red-800"></div>
         </section>
 
         <!-- 7. AUTO -->
         <section id="auto" class="calc-card bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
-            <h2 class="text-2xl font-black mb-6 text-slate-700 font-black">Sécurité Routière</h2>
-            <p class="text-xs text-gray-400 mb-4 uppercase font-bold">Calculez votre distance d'arrêt</p>
-            <input type="number" id="vitesse" placeholder="Vitesse actuelle (km/h)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl mb-4 outline-none">
-            <button onclick="calcAuto()" class="w-full bg-slate-800 text-white py-5 rounded-2xl font-black text-xl shadow-lg">DISTANCE D'ARRÊT</button>
-            <div id="res-auto" class="hidden mt-6 p-6 bg-slate-100 rounded-2xl text-center border-2 border-slate-200">
-                <p id="auto-result" class="font-black text-slate-800 text-xl"></p>
-            </div>
+            <h2 class="text-2xl font-black mb-6 text-slate-700">Sécurité Routière</h2>
+            <p class="text-xs text-gray-400 mb-4 uppercase font-bold">Calculez votre distance d'arrêt</p><input type="number" id="vitesse" placeholder="Vitesse actuelle (km/h)" class="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-xl mb-4 outline-none"><button onclick="calcAuto()" class="btn-calc w-full bg-slate-800 text-white py-5 rounded-2xl font-black text-xl shadow-lg">DISTANCE D'ARRÊT</button>
+            <div id="res-auto" class="hidden mt-6 p-6 bg-slate-100 rounded-2xl text-center border-2 border-slate-200"><p id="auto-result" class="font-black text-slate-800 text-xl"></p></div>
         </section>
 
         <!-- ZONE PUB BAS -->
-        <div class="mt-10">
-            <div class="bg-gray-100 border-2 border-dashed border-gray-300 h-44 flex items-center justify-center text-gray-400 text-[10px] rounded-2xl uppercase tracking-tighter">
-                PUB ADSENSE (GRANDE UNITÉ)
-            </div>
-        </div>
+        <div class="mt-10"><div class="bg-gray-100 border-2 border-dashed border-gray-300 h-44 flex items-center justify-center text-gray-400 text-[10px] rounded-2xl uppercase tracking-tighter">PUB ADSENSE (GRANDE UNITÉ)</div></div>
 
     </main>
 
-    <footer class="mt-20 p-8 text-center border-t bg-white">
-        <p class="text-gray-900 font-black text-lg">CALCUL-RAPIDE.online</p>
-        <p class="text-gray-400 text-xs mt-1">Édition Spéciale 2024-2027</p>
-        <div class="flex justify-center gap-6 mt-6 text-blue-600 font-bold text-sm">
-            <a href="#">Confidentialité</a>
-            <a href="#">Contact</a>
-        </div>
-    </footer>
+    <footer class="mt-20 p-8 text-center border-t bg-white"><p class="text-gray-900 font-black text-lg">CALCUL-RAPIDE.online</p><p class="text-gray-400 text-xs mt-1">Édition Spéciale 2024-2027</p><div class="flex justify-center gap-6 mt-6 text-blue-600 font-bold text-sm"><a href="#">Confidentialité</a><a href="#">Contact</a></div></footer>
 
-    <!-- LOGIQUE JAVASCRIPT SANS FAUTE -->
     <script>
-        function showCalc(id, btn) {
-            document.querySelectorAll('.calc-card').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            btn.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function calcSalaire() {
-            let b = document.getElementById('brut').value;
-            if(b > 0) {
-                document.getElementById('net-result').innerText = (b * 0.77).toFixed(2) + " €";
-                document.getElementById('res-salaire').classList.remove('hidden');
-            }
-        }
-
-        function calcChomage() {
-            let s = document.getElementById('brut-ch').value;
-            if(s > 0) {
-                document.getElementById('chomage-result').innerText = (s * 0.57).toFixed(2) + " €";
-                document.getElementById('res-chomage').classList.remove('hidden');
-            }
-        }
-
-        function calcPret() {
-            let cap = document.getElementById('capital').value;
-            let t = (document.getElementById('taux').value / 100) / 12;
-            let d = document.getElementById('duree').value * 12;
-            if(cap > 0 && t > 0 && d > 0) {
-                let m = (cap * t) / (1 - Math.pow(1 + t, -d));
-                document.getElementById('pret-result').innerText = m.toFixed(2) + " € / mois";
-                document.getElementById('res-pret').classList.remove('hidden');
-            }
-        }
-
-        function calcTVA() {
-            let ht = parseFloat(document.getElementById('ht').value);
-            let tx = parseFloat(document.getElementById('taux-tva').value);
-            if(ht > 0) {
-                let ttc = ht * (1 + tx/100);
-                document.getElementById('res-tva').innerHTML = `TTC : ${ttc.toFixed(2)} € <br><span class="text-sm font-bold text-orange-400">TVA : ${(ttc-ht).toFixed(2)} €</span>`;
-                document.getElementById('res-tva').classList.remove('hidden');
-            }
-        }
-
-        function calcIMC() {
-            let p = document.getElementById('poids').value;
-            let t = document.getElementById('taille').value / 100;
-            if(p > 0 && t > 0) {
-                let imc = (p / (t * t)).toFixed(1);
-                let cat = imc < 18.5 ? "MAIGREUR" : imc < 25 ? "NORMALE" : imc < 30 ? "SURPOIDS" : "OBÉSITÉ";
-                document.getElementById('res-imc').innerHTML = `SCORE : ${imc} <br> <span class="text-xs">CATÉGORIE : ${cat}</span>`;
-                document.getElementById('res-imc').classList.remove('hidden');
-            }
-        }
-
-        function calcCalories() {
-            let p = parseFloat(document.getElementById('poids-cal').value);
-            let a = parseInt(document.getElementById('age').value);
-            let s = document.getElementById('sexe').value;
-            if(p > 0 && a > 0) {
-                let res = s === "homme" ? (10 * p) + 900 : (10 * p) + 700;
-                document.getElementById('res-calories').innerHTML = `${Math.round(res)} KCAL / JOUR <br> <span class="text-[10px] font-bold opacity-50 text-red-400 uppercase tracking-tighter">Besoins de base estimés</span>`;
-                document.getElementById('res-calories').classList.remove('hidden');
-            }
-        }
-
-        function calcAuto() {
-            let v = parseFloat(document.getElementById('vitesse').value);
-            if(v > 0) {
-                let d = Math.pow(v / 10, 2); 
-                let r = (v / 10) * 3;
-                document.getElementById('auto-result').innerHTML = `ARRÊT : ~${Math.round(d + r)} MÈTRES <br> <span class="text-xs font-normal">Réaction (${Math.round(r)}m) + Freinage (${Math.round(d)}m)</span>`;
-                document.getElementById('res-auto').classList.remove('hidden');
-            }
-        }
+        function showCalc(id, btn) { document.querySelectorAll('.calc-card').forEach(c => c.classList.remove('active')); document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); btn.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function calcSalaire() { let b = document.getElementById('brut').value; if(b > 0) { document.getElementById('net-result').innerText = (b * 0.77).toFixed(2) + " €"; document.getElementById('res-salaire').classList.remove('hidden'); } }
+        function calcChomage() { let s = document.getElementById('brut-ch').value; if(s > 0) { document.getElementById('chomage-result').innerText = (s * 0.57).toFixed(2) + " €"; document.getElementById('res-chomage').classList.remove('hidden'); } }
+        function calcPret() { let cap = document.getElementById('capital').value; let t = (document.getElementById('taux').value / 100) / 12; let d = document.getElementById('duree').value * 12; if(cap > 0 && t > 0 && d > 0) { let m = (cap * t) / (1 - Math.pow(1 + t, -d)); document.getElementById('pret-result').innerText = m.toFixed(2) + " € / mois"; document.getElementById('res-pret').classList.remove('hidden'); } }
+        function calcTVA() { let ht = parseFloat(document.getElementById('ht').value); let tx = parseFloat(document.getElementById('taux-tva').value); if(ht > 0) { let ttc = ht * (1 + tx/100); document.getElementById('res-tva').innerHTML = `TTC : ${ttc.toFixed(2)} € <br><span class="text-sm font-bold text-orange-400">TVA : ${(ttc-ht).toFixed(2)} €</span>`; document.getElementById('res-tva').classList.remove('hidden'); } }
+        function calcIMC() { let p = document.getElementById('poids').value; let t = document.getElementById('taille').value / 100; if(p > 0 && t > 0) { let imc = (p / (t * t)).toFixed(1); let cat = imc < 18.5 ? "MAIGREUR" : imc < 25 ? "NORMALE" : imc < 30 ? "SURPOIDS" : "OBÉSITÉ"; document.getElementById('res-imc').innerHTML = `SCORE : ${imc} <br> <span class="text-xs">CATÉGORIE : ${cat}</span>`; document.getElementById('res-imc').classList.remove('hidden'); } }
+        function calcCalories() { let p = parseFloat(document.getElementById('poids-cal').value); let a = parseInt(document.getElementById('age').value); let s = document.getElementById('sexe').value; if(p > 0 && a > 0) { let res = s === "homme" ? (10 * p) + 900 : (10 * p) + 700; document.getElementById('res-calories').innerHTML = `${Math.round(res)} KCAL / JOUR <br> <span class="text-[10px] font-bold opacity-50 text-red-400 uppercase tracking-tighter">Besoins de base estimés</span>`; document.getElementById('res-calories').classList.remove('hidden'); } }
+        function calcAuto() { let v = parseFloat(document.getElementById('vitesse').value); if(v > 0) { let d = Math.pow(v / 10, 2); let r = (v / 10) * 3; document.getElementById('auto-result').innerHTML = `ARRÊT : ~${Math.round(d + r)} MÈTRES <br> <span class="text-xs font-normal">Réaction (${Math.round(r)}m) + Freinage (${Math.round(d)}m)</span>`; document.getElementById('res-auto').classList.remove('hidden'); } }
     </script>
 </body>
-            </html>
+                </html>
