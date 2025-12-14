@@ -1,391 +1,164 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Calcul-Rapide.online | Tous vos calculateurs en ligne</title>
-  <meta name="description" content="Salaire net, prêt immobilier, TVA, intérêts composés, IMC, calories, pourboire, pourcentage, règle de trois... Calcul-Rapide.online regroupe plusieurs calculateurs gratuits, rapides et simples sur une seule page.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    * { scroll-behavior: smooth; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:#f8fafc;
-    }
-    .gradient-text {
-      background:linear-gradient(to right,#2563eb,#7c3aed);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .hero-bg {
-      background-image:
-        linear-gradient(rgba(15,23,42,0.9),rgba(30,64,175,0.9)),
-        url("https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1920&auto=format&fit=crop");
-      background-size:cover;
-      background-position:center;
-    }
-    .btn-soft { transition:all .2s ease; }
-    .btn-soft:hover { transform:translateY(-1px); box-shadow:0 10px 25px rgba(15,23,42,.12); }
-    .calc-card { animation:fadeIn .3s ease-out; }
-    @keyframes fadeIn {
-      from{opacity:0; transform:translateY(6px);}
-      to{opacity:1; transform:translateY(0);}
-    }
-    .nav-link { position:relative; }
-    .nav-link::after{
-      content:""; position:absolute; left:0; bottom:-4px;
-      width:0; height:2px; background:#2563eb; transition:width .2s;
-    }
-    .nav-link:hover::after{ width:100%; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul‑Rapide.online – Calculateurs Gratuits (Salaire, Chômage, Prêt, IMC...)</title>
+    
+    <!-- SEO & META DONNÉES -->
+    <meta name="description" content="Calcul‑Rapide.online : La suite ultime de calculateurs gratuits. Salaire net, indemnité chômage, mensualité prêt immobilier, TVA, IMC, calories, pourboire et calcul de trajet. Outils rapides, précis et 100% gratuits.">
+    <meta name="keywords" content="calculateur salaire net, simulateur chômage, indemnité chômage, calcul prêt immobilier, calculatrice TVA, IMC, calories, pourboire, règle de trois, calcul trajet, distance vitesse temps, simulation retraite">
+    <meta name="robots" content="index, follow">
+    
+    <!-- OPEN GRAPH (Réseaux sociaux) -->
+    <meta property="og:title" content="Calcul‑Rapide.online – Tous vos calculs en un clic">
+    <meta property="og:description" content="Salaire, impôts, crédit, santé, voyage. Plus de 15 outils de calcul gratuits et immédiats.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://calcul-rapide.online/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- STYLES (Tailwind + Custom) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .gradient-text { background: linear-gradient(90deg, #2563eb, #7c3aed); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero-bg { background: linear-gradient(rgba(15,23,42,0.8), rgba(30,64,175,0.8)), url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1920&auto=format&fit=crop'); background-size: cover; background-position: center; }
+        .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
+        .modal-content { background-color: #fff; margin: 5% auto; padding: 30px; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: slideDown 0.3s ease-out; }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 1; }
+        .close-btn:hover { color: #000; }
+        .result-box { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; background-color: #f0f9ff; border-left: 4px solid #2563eb; }
+        .filter-btn.active { background-color: #2563eb; color: white; }
+    </style>
 </head>
-<body class="text-slate-900">
+<body class="bg-slate-50 text-slate-800">
 
-<!-- HEADER -->
-<header class="bg-white/90 backdrop-blur shadow-sm sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg shadow">
-        <i class="fas fa-calculator text-white text-xl"></i>
-      </div>
-      <div>
-        <p class="font-black text-lg tracking-tight">
-          Calcul-Rapide<span class="gradient-text">.online</span>
-        </p>
-        <p class="text-[11px] uppercase tracking-[0.16em] text-slate-400 font-semibold">
-          Suite de calculateurs en ligne
-        </p>
-      </div>
+    <!-- HEADER -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg shadow-md">
+                    <i class="fas fa-calculator text-white text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-xl font-black tracking-tight text-slate-900">Calcul‑Rapide<span class="gradient-text">.online</span></p>
+                    <p class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Outils de calcul gratuits</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="#calculateurs" class="hover:text-blue-600 transition">Calculateurs</a>
+                <a href="#apropos" class="hover:text-blue-600 transition">À propos</a>
+                <a href="#contact" class="hover:text-blue-600 transition">Contact</a>
+            </nav>
+            <button onclick="toggleMenu()" class="md:hidden text-slate-600 text-xl"><i class="fas fa-bars"></i></button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
+            <a href="#calculateurs" onclick="toggleMenu()" class="block py-2 text-slate-700 hover:bg-blue-50 px-2 rounded">Calculateurs</a>
+            <a href="#apropos" onclick="toggleMenu()" class="block py-2 text-slate-700 hover:bg-blue-50 px-2 rounded">À propos</a>
+            <a href="#contact" onclick="toggleMenu()" class="block py-2 text-slate-700 hover:bg-blue-50 px-2 rounded">Contact</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-bg text-white py-16 md:py-24">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">La calculatrice ultime pour votre quotidien</h1>
+            <p class="text-lg md:text-xl text-slate-200 mb-8 opacity-90">
+                Salaire net, <span class="font-bold text-white">indemnité chômage</span>, prêt immobilier, TVA, IMC, calories, pourboire... 
+                <br class="hidden md:block">Obtenez vos résultats en moins de 3 secondes. 100% gratuit et sans inscription.
+            </p>
+            <a href="#calculateurs" class="inline-block bg-white text-blue-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-slate-100 transition transform hover:scale-105">
+                <i class="fas fa-rocket mr-2"></i> Lancer les calculs
+            </a>
+        </div>
+    </section>
+
+    <!-- AD PLACEHOLDER -->
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+        <div class="h-24 bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl flex items-center justify-center text-slate-400 text-sm">
+            [ Emplacement Publicitaire Google AdSense - 728x90 ]
+        </div>
     </div>
 
-    <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-      <a href="#calculateurs" class="nav-link text-slate-600 hover:text-blue-600">Calculateurs</a>
-      <a href="#apropos" class="nav-link text-slate-600 hover:text-blue-600">À propos</a>
-      <a href="#contact" class="nav-link text-slate-600 hover:text-blue-600">Contact</a>
-    </nav>
+    <!-- CALCULATEURS SECTION -->
+    <section id="calculateurs" class="max-w-6xl mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold mb-2 text-center">Nos outils de calcul</h2>
+        <p class="text-slate-500 text-center mb-8 max-w-2xl mx-auto">Sélectionnez un outil ci-dessous pour commencer.</p>
 
-    <a href="#calculateurs" class="md:hidden text-xs font-semibold text-blue-600 border border-blue-100 px-3 py-1 rounded-full">
-      Outils
-    </a>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero-bg text-white">
-  <div class="max-w-6xl mx-auto px-4 py-12 md:py-16 grid md:grid-cols-2 gap-10 items-center">
-    <div>
-      <h1 class="text-3xl md:text-4xl font-black leading-tight mb-4">
-        Un seul site pour <span class="text-blue-200">tous vos calculs du quotidien</span>.
-      </h1>
-      <p class="text-sm md:text-base text-blue-100 mb-5">
-        Salaire net, prêt immobilier, intérêts composés, TVA, IMC, calories, pourboire, pourcentage…
-        Calcul-Rapide.online réunit plusieurs calculateurs utiles, gratuits et rapides.
-      </p>
-      <a href="#calculateurs"
-         class="inline-flex items-center gap-2 bg-white text-blue-700 text-sm font-bold px-4 py-3 rounded-full shadow-lg btn-soft">
-        Commencer à calculer
-        <i class="fas fa-arrow-down"></i>
-      </a>
-      <p class="mt-2 text-[11px] text-blue-100">
-        Gratuit, sans inscription, optimisé pour mobile.
-      </p>
-    </div>
-    <div class="hidden md:block">
-      <div class="bg-white/5 border border-white/20 rounded-2xl p-4 shadow-xl text-left text-sm">
-        <p class="text-[11px] uppercase tracking-[0.18em] text-blue-100 mb-2 font-semibold">
-          Ce que vous pouvez faire ici
-        </p>
-        <ul class="list-disc list-inside text-blue-50 text-xs space-y-1">
-          <li>Vérifier rapidement un salaire net à partir d’un brut.</li>
-          <li>Simuler une mensualité de crédit immobilier.</li>
-          <li>Calculer un montant TTC à partir d’un HT.</li>
-          <li>Contrôler votre IMC et vos besoins caloriques.</li>
-          <li>Calculer un pourboire, une réduction, un pourcentage, etc.</li>
-        </ul>
-        <p class="mt-4 text-[11px] text-blue-100">
-          👉 Tous les calculs sont effectués directement dans votre navigateur, aucune donnée n’est stockée.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="bg-white">
-  <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-sm">
-    <div>
-      <i class="fas fa-calculator text-2xl text-blue-500 mb-1"></i>
-      <p class="text-lg font-bold">12</p>
-      <p class="text-slate-500 text-xs">calculateurs disponibles</p>
-    </div>
-    <div>
-      <i class="fas fa-bolt text-2xl text-yellow-500 mb-1"></i>
-      <p class="text-lg font-bold">&lt; 1s</p>
-      <p class="text-slate-500 text-xs">temps de calcul</p>
-    </div>
-    <div>
-      <i class="fas fa-lock text-2xl text-emerald-500 mb-1"></i>
-      <p class="text-lg font-bold">0 compte</p>
-      <p class="text-slate-500 text-xs">aucune inscription</p>
-    </div>
-    <div>
-      <i class="fas fa-mobile-screen text-2xl text-purple-500 mb-1"></i>
-      <p class="text-lg font-bold">Responsive</p>
-      <p class="text-slate-500 text-xs">mobile & ordinateur</p>
-    </div>
-  </div>
-</section>
-
-<!-- BLOC PUB HAUT -->
-<div class="max-w-6xl mx-auto px-4 mt-4">
-  <div class="h-20 rounded-xl border-2 border-dashed border-slate-300 bg-slate-100 text-[11px] flex items-center justify-center text-slate-400">
-    Emplacement futur pour une bannière Google&nbsp;AdSense
-  </div>
-</div>
-
-<!-- CALCULATEURS -->
-<section id="calculateurs" class="max-w-6xl mx-auto px-4 py-10">
-  <h2 class="text-xl md:text-2xl font-black text-slate-900 mb-2">
-    Calculateurs disponibles
-  </h2>
-  <p class="text-xs md:text-sm text-slate-600 mb-6">
-    Remplissez les champs, cliquez sur le bouton, le résultat s’affiche immédiatement.
-  </p>
-
-  <div class="grid md:grid-cols-2 gap-5">
-
-    <!-- 1. Salaire brut -> net -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-blue-700 mb-3 flex items-center gap-2">
-        <i class="fas fa-wallet text-blue-500"></i>
-        Salaire brut → salaire net (approx.)
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Salaire brut mensuel (€)
-      </label>
-      <input id="brut" type="number" placeholder="Ex : 2300"
-             class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-blue-500">
-      <button onclick="calcSalaire()"
-              class="btn-soft w-full bg-blue-600 hover:bg-blue-700 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Calculer le net estimé
-      </button>
-      <div id="res-salaire" class="hidden mt-4 p-3 rounded-xl bg-blue-50 border border-blue-100 text-center">
-        <p class="text-[10px] text-blue-700 font-semibold uppercase tracking-[0.18em]">
-          Résultat estimé
-        </p>
-        <p id="net-result" class="text-2xl font-black text-blue-700 mt-1"></p>
-        <p class="text-[10px] text-blue-500 mt-1">
-          Estimation pour un salarié du privé, hors impôt sur le revenu.
-        </p>
-      </div>
-    </article>
-
-    <!-- 2. Prêt immobilier -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-indigo-700 mb-3 flex items-center gap-2">
-        <i class="fas fa-house-chimney text-indigo-500"></i>
-        Mensualité de prêt immobilier
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Montant emprunté (€)
-      </label>
-      <input id="capital" type="number" placeholder="Ex : 200000"
-             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-indigo-500">
-      <div class="grid grid-cols-2 gap-2 mb-2">
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Durée (années)</label>
-          <input id="duree" type="number" placeholder="25"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-indigo-500">
+        <!-- FILTRES -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8">
+            <button onclick="filterCards('all')" class="filter-btn active px-4 py-2 rounded-full bg-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-300 transition">Tous</button>
+            <button onclick="filterCards('finance')" class="filter-btn px-4 py-2 rounded-full bg-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-300 transition">💰 Finance</button>
+            <button onclick="filterCards('sante')" class="filter-btn px-4 py-2 rounded-full bg-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-300 transition">❤️ Santé</button>
+            <button onclick="filterCards('quotidien')" class="filter-btn px-4 py-2 rounded-full bg-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-300 transition">🌍 Quotidien</button>
         </div>
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Taux annuel (%)</label>
-          <input id="taux" type="number" placeholder="3.2" step="0.01"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-indigo-500">
-        </div>
-      </div>
-      <button onclick="calcPret()"
-              class="btn-soft w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Calculer la mensualité
-      </button>
-      <div id="res-pret" class="hidden mt-4 p-3 rounded-xl bg-indigo-50 border border-indigo-100 text-center">
-        <p class="text-[10px] text-indigo-700 font-semibold uppercase tracking-[0.18em]">
-          Mensualité estimée
-        </p>
-        <p id="pret-result" class="text-2xl font-black text-indigo-700 mt-1"></p>
-      </div>
-    </article>
 
-    <!-- 3. TVA -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-orange-600 mb-3 flex items-center gap-2">
-        <i class="fas fa-receipt text-orange-500"></i>
-        Calcul de TVA (HT → TTC)
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Montant hors taxe (€)
-      </label>
-      <input id="ht" type="number" placeholder="Ex : 100"
-             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-orange-500">
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Taux de TVA
-      </label>
-      <select id="taux-tva"
-              class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-orange-500">
-        <option value="20">20 % (taux normal)</option>
-        <option value="10">10 %</option>
-        <option value="5.5">5,5 %</option>
-      </select>
-      <button onclick="calcTVA()"
-              class="btn-soft w-full bg-orange-500 hover:bg-orange-600 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Calculer le TTC
-      </button>
-      <div id="res-tva" class="hidden mt-4 p-3 rounded-xl bg-orange-50 border border-orange-100 text-center text-sm font-semibold text-orange-700"></div>
-    </article>
-
-    <!-- 4. Intérêts composés -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-emerald-700 mb-3 flex items-center gap-2">
-        <i class="fas fa-piggy-bank text-emerald-500"></i>
-        Intérêts composés (épargne)
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">Capital initial (€)</label>
-      <input id="icapital" type="number" placeholder="Ex : 5000"
-             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">Versement mensuel (€)</label>
-      <input id="ivers" type="number" placeholder="Ex : 100"
-             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
-      <div class="grid grid-cols-2 gap-2 mb-2">
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Durée (années)</label>
-          <input id="ians" type="number" placeholder="10"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
+        <!-- GRILLE CALCULATEURS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Carte 1: Salaire -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="finance" onclick="openModal('salaire')">
+                <i class="fas fa-wallet text-blue-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Salaire Brut → Net</h3>
+                <p class="text-slate-500 text-sm">Estimation du net à payer.</p>
+            </div>
+            <!-- Carte 2: Chômage -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="finance" onclick="openModal('chomage')">
+                <i class="fas fa-hand-holding-dollar text-orange-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Indemnité Chômage</h3>
+                <p class="text-slate-500 text-sm">Simulation ARE (France).</p>
+            </div>
+            <!-- Carte 3: Prêt -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="finance" onclick="openModal('pret')">
+                <i class="fas fa-home text-indigo-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Prêt Immobilier</h3>
+                <p class="text-slate-500 text-sm">Calcul de mensualité.</p>
+            </div>
+            <!-- Carte 4: TVA -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="finance" onclick="openModal('tva')">
+                <i class="fas fa-receipt text-green-600 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Calcul TVA</h3>
+                <p class="text-slate-500 text-sm">HT vers TTC et inverse.</p>
+            </div>
+            <!-- Carte 5: IMC -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="sante" onclick="openModal('imc')">
+                <i class="fas fa-weight text-pink-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Indice de Masse Corporelle</h3>
+                <p class="text-slate-500 text-sm">Poids idéal et santé.</p>
+            </div>
+            <!-- Carte 6: Calories -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="sante" onclick="openModal('calories')">
+                <i class="fas fa-fire text-red-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Besoins Caloriques</h3>
+                <p class="text-slate-500 text-sm">BMR et dépense journalière.</p>
+            </div>
+            <!-- Carte 7: Pourboire -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="quotidien" onclick="openModal('pourboire')">
+                <i class="fas fa-hand-holding-usd text-yellow-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Calcul Pourboire</h3>
+                <p class="text-slate-500 text-sm">Restaurant, coiffeur, taxi.</p>
+            </div>
+            <!-- Carte 8: Trajet -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="quotidien" onclick="openModal('trajet')">
+                <i class="fas fa-route text-teal-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Durée de Trajet</h3>
+                <p class="text-slate-500 text-sm">Distance et vitesse.</p>
+            </div>
+            <!-- Carte 9: Règle de 3 -->
+            <div class="calc-card bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover cursor-pointer" data-cat="quotidien" onclick="openModal('regle3')">
+                <i class="fas fa-divide text-purple-500 text-2xl mb-3"></i>
+                <h3 class="font-bold text-lg mb-1">Règle de Trois</h3>
+                <p class="text-slate-500 text-sm">Produit en croix simple.</p>
+            </div>
         </div>
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Taux annuel (%)</label>
-          <input id="itaux" type="number" placeholder="4" step="0.1"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
-        </div>
-      </div>
-      <button onclick="calcInterets()"
-              class="btn-soft w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Estimer le capital final
-      </button>
-      <div id="res-interets" class="hidden mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-center text-sm font-semibold text-emerald-700"></div>
-    </article>
+    </section>
 
-    <!-- 5. Taux d’endettement -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
-        <i class="fas fa-scale-balanced text-slate-600"></i>
-        Taux d’endettement
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">Revenus mensuels (€)</label>
-      <input id="revenus" type="number" placeholder="Ex : 2500"
-             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-slate-500">
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">Charges / crédits mensuels (€)</label>
-      <input id="charges" type="number" placeholder="Ex : 800"
-             class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-slate-500">
-      <button onclick="calcEndettement()"
-              class="btn-soft w-full bg-slate-800 hover:bg-slate-900 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Calculer le taux d’endettement
-      </button>
-      <div id="res-endettement" class="hidden mt-4 p-3 rounded-xl bg-slate-100 border border-slate-200 text-center text-sm font-semibold text-slate-800"></div>
-    </article>
-
-    <!-- 6. IMC -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-pink-600 mb-3 flex items-center gap-2">
-        <i class="fas fa-weight-scale text-pink-500"></i>
-        IMC (Indice de Masse Corporelle)
-      </h3>
-      <div class="grid grid-cols-2 gap-2 mb-2">
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Poids (kg)</label>
-          <input id="poids" type="number" placeholder="70"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-pink-500">
-        </div>
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Taille (cm)</label>
-          <input id="taille" type="number" placeholder="175"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-pink-500">
-        </div>
-      </div>
-      <button onclick="calcIMC()"
-              class="btn-soft w-full bg-pink-500 hover:bg-pink-600 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Calculer mon IMC
-      </button>
-      <div id="res-imc" class="hidden mt-4 p-3 rounded-xl bg-pink-50 border border-pink-100 text-center text-sm font-semibold text-pink-700"></div>
-    </article>
-
-    <!-- 7. Calories -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-red-600 mb-3 flex items-center gap-2">
-        <i class="fas fa-fire-flame-curved text-red-500"></i>
-        Besoins caloriques (simplifiés)
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">Sexe</label>
-      <select id="sexe" class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-red-500">
-        <option value="homme">Homme</option>
-        <option value="femme">Femme</option>
-      </select>
-      <div class="grid grid-cols-2 gap-2 mb-2">
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Poids (kg)</label>
-          <input id="poids-cal" type="number" placeholder="70"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-red-500">
-        </div>
-        <div>
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Âge (ans)</label>
-          <input id="age" type="number" placeholder="30"
-                 class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-red-500">
-        </div>
-      </div>
-      <button onclick="calcCalories()"
-              class="btn-soft w-full bg-red-500 hover:bg-red-600 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Calculer mes besoins
-      </button>
-      <div id="res-calories" class="hidden mt-4 p-3 rounded-xl bg-red-50 border border-red-100 text-center text-sm font-semibold text-red-700"></div>
-    </article>
-
-    <!-- 8. Pourboire -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-emerald-600 mb-3 flex items-center gap-2">
-        <i class="fas fa-hand-holding-dollar text-emerald-500"></i>
-        Calculateur de pourboire
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Montant de l’addition (€)
-      </label>
-      <input id="montant-add" type="number" placeholder="Ex : 56.80"
-             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Pourcentage de pourboire (%)
-      </label>
-      <input id="taux-pourb" type="number" placeholder="Ex : 10" value="10"
-             class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-emerald-500">
-      <button onclick="calcPourboire()"
-              class="btn-soft w-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs md:text-sm font-bold py-3 rounded-xl">
-        Calculer le pourboire
-      </button>
-      <div id="res-pourboire" class="hidden mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-center text-sm font-semibold text-emerald-700"></div>
-    </article>
-
-    <!-- 9. Prix remisé -->
-    <article class="calc-card bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-      <h3 class="text-base md:text-lg font-black text-sky-700 mb-3 flex items-center gap-2">
-        <i class="fas fa-tags text-sky-500"></i>
-        Prix après réduction
-      </h3>
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Prix initial (€)
-      </label>
-      <input id="prix-init" type="number" placeholder="Ex : 89.99"
-             class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-sky-500">
-      <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-        Réduction (%)
-      </label>
-      <input id="remise" type="number" placeholder="Ex : 30"
-             class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 text-sm outline-none focus:border-sky-500">
-      <button onclick="calcRemise()"
-              class="btn-so
+    <!-- A PROPOS / SEO TEXT -->
+    <section id="apropos" class="bg-white py-12 border-y border-slate-100">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 text-center">Pourquoi utiliser Calcul‑Rapide.online ?</h2>
+            <div class="prose max-w-none text-slate-600 space-y-4 
