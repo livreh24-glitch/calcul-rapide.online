@@ -3,63 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Calcul‑Rapide.online | Salaire net, chômage, prêt, TVA, IMC, trajet…</title>
+  <title>Calcul-Rapide.online | Salaire net, chômage, prêt, TVA, IMC, trajet…</title>
 
-  <meta name="description"
-        content="Calcul‑Rapide.online : méga site de calculateurs gratuits (salaire brut → net, estimation chômage ARE, prêt immobilier, TVA, intérêts composés, IMC, calories, trajet… Rapide, simple, mobile." />
+  <meta name="description" content="Calcul-Rapide.online : méga site de calculateurs gratuits (salaire brut → net, estimation chômage ARE, prêt immobilier, TVA, intérêts composés, IMC, calories, pourboire, pourcentage, règle de 3, durée trajet, coût essence). Rapide, simple, mobile." />
   <link rel="canonical" href="https://calcul-rapide.online/" />
 
-  <!-- Open Graph (pour le partage sur les réseaux) -->
-  <meta property="og:title" content="Calcul‑Rapide.online | Méga site de calculateurs gratuits" />
-  <meta property="og:description"
-        content="Salaire net, chômage ARE, prêt immobilier, TVA, IMC, calories, trajet (temps & essence)… Tous vos calculs en ligne, gratuits et instantanés." />
+  <!-- Open Graph (partage réseaux) -->
+  <meta property="og:title" content="Calcul-Rapide.online | Méga site de calculateurs gratuits" />
+  <meta property="og:description" content="Salaire net, chômage ARE, prêt immobilier, TVA, IMC, calories, trajet (temps & essence)… Tous vos calculs en ligne, gratuits et instantanés." />
   <meta property="og:url" content="https://calcul-rapide.online/" />
   <meta property="og:type" content="website" />
+  <!-- Optionnel : ajoute une image si tu en mets une plus tard -->
+  <!-- <meta property="og:image" content="https://calcul-rapide.online/preview.png" /> -->
+
   <meta name="robots" content="index,follow" />
 
-  <!-- Tailwind CSS (CDN) + Font Awesome (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json" />
-
-  <!-- ==== STYLE PERSONNALISÉ ==== -->
   <style>
-    *{scroll-behavior:smooth}
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    * { scroll-behavior: smooth; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
     .hero-bg{
       background-image:
-        linear-gradient(rgba(15,23,42,.90),rgba(30,64,175,.90)),
+        linear-gradient(rgba(15,23,42,.90), rgba(30,64,175,.90)),
         url("https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1920&auto=format&fit=crop");
-      background-size:cover;background-position:center;
+      background-size: cover;
+      background-position: center;
     }
-    .btn-soft{transition:all .18s ease}
-    .btn-soft:hover{transform:translateY(-1px);
-      box-shadow:0 10px 25px rgba(15,23,42,.12)}
-    .card{transition:all .18s ease}
-    .card:hover{transform:translateY(-2px);
-      box-shadow:0 14px 30px rgba(15,23,42,.10)}
-    .fade-in{animation:fadeIn .22s ease-out}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-    .nav-link{position:relative}
+
+    .btn-soft { transition: all .18s ease; }
+    .btn-soft:hover { transform: translateY(-1px); box-shadow: 0 10px 25px rgba(15,23,42,.12); }
+
+    .card { transition: all .18s ease; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(15,23,42,.10); }
+
+    .fade-in { animation: fadeIn .22s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .nav-link { position: relative; }
     .nav-link::after{
-      content:"";position:absolute;left:0;bottom:-6px;
-      height:2px;width:0;background:#2563eb;transition:width .18s ease}
-    .nav-link:hover::after{width:100%}
+      content:""; position:absolute; left:0; bottom:-6px;
+      height:2px; width:0; background:#2563eb; transition: width .18s ease;
+    }
+    .nav-link:hover::after{ width:100%; }
+
     .mini-badge{
-      background:rgba(37,99,235,.10);
-      color:#1d4ed8;
-      border:1px solid rgba(37,99,235,.18);
+      background: rgba(37, 99, 235, .10);
+      color: #1d4ed8;
+      border: 1px solid rgba(37, 99, 235, .18);
     }
   </style>
 </head>
 
 <body class="bg-slate-50 text-slate-900">
 
-  <!-- ==================== EN‑TÊTE ==================== -->
+  <!-- HEADER -->
   <header class="bg-white/90 backdrop-blur border-b border-slate-200 sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="#top" class="flex items-center gap-2">
@@ -68,7 +68,7 @@
         </div>
         <div>
           <div class="font-black text-lg tracking-tight">
-            Calcul‑Rapide<span class="text-blue-600">.online</span>
+            Calcul-Rapide<span class="text-blue-600">.online</span>
           </div>
           <div class="text-[11px] uppercase tracking-[0.16em] text-slate-400 font-semibold">
             Le méga site de calculs
@@ -85,14 +85,13 @@
         <a class="nav-link text-slate-600 hover:text-blue-600" href="#mentions">Mentions</a>
       </nav>
 
-      <a href="#finance" class="md:hidden text-xs font-semibold text-blue-600
-                                   border border-blue-100 px-3 py-1 rounded-full">
+      <a href="#finance" class="md:hidden text-xs font-semibold text-blue-600 border border-blue-100 px-3 py-1 rounded-full">
         Ouvrir les outils
       </a>
     </div>
   </header>
 
-  <!-- ==================== HERO ==================== -->
+  <!-- HERO -->
   <section id="top" class="hero-bg text-white">
     <div class="max-w-6xl mx-auto px-4 py-12 md:py-16 grid md:grid-cols-2 gap-10 items-center">
       <div>
@@ -106,18 +105,15 @@
         </h1>
 
         <p class="text-sm md:text-base text-blue-100 mb-6">
-          Salaire brut → net, estimation chômage (ARE), prêt immobilier, TVA, intérêts composés,
-          IMC, calories, durée de trajet, coût essence… Ici tu calcules tout, sans te prendre la tête.
+          Salaire brut → net, estimation chômage (ARE), prêt immobilier, TVA, intérêts composés, IMC, calories,
+          durée de trajet, coût essence… Ici tu calcules tout, sans te prendre la tête.
         </p>
 
         <div class="flex flex-wrap gap-3">
-          <a href="#finance"
-             class="btn-soft inline-flex items-center gap-2 bg-white text-blue-700 font-black text-sm px-5 py-3 rounded-full shadow">
+          <a href="#finance" class="btn-soft inline-flex items-center gap-2 bg-white text-blue-700 font-black text-sm px-5 py-3 rounded-full shadow">
             Commencer maintenant <i class="fa-solid fa-arrow-down"></i>
           </a>
-
-          <a href="#mentions"
-             class="btn-soft inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-3 rounded-full">
+          <a href="#mentions" class="btn-soft inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-3 rounded-full">
             Infos & Mentions <i class="fa-regular fa-file-lines"></i>
           </a>
         </div>
@@ -148,18 +144,16 @@
     </div>
   </section>
 
-  <!-- PLACEHOLDER PUBLICITE (futur AdSense) -->
+  <!-- PUB PLACEHOLDER HAUT -->
   <div class="max-w-6xl mx-auto px-4 mt-4">
-    <div class="h-20 rounded-xl border-2 border-dashed border-slate-300 bg-slate-100
-               text-[11px] flex items-center justify-center text-slate-400">
+    <div class="h-20 rounded-xl border-2 border-dashed border-slate-300 bg-slate-100 text-[11px] flex items-center justify-center text-slate-400">
       Emplacement futur : Google AdSense (bannière)
     </div>
   </div>
 
-  <!-- ==================== CONTENU PRINCIPAL ==================== -->
   <main class="max-w-6xl mx-auto px-4 py-10 space-y-14">
 
-    <!-- ==================== FINANCE (inclut le calculateur de facture d’eau) ==================== -->
+    <!-- FINANCE -->
     <section id="finance">
       <div class="flex items-end justify-between gap-4 mb-4">
         <div>
@@ -173,257 +167,240 @@
 
       <div class="grid md:grid-cols-2 gap-5">
 
-        <!-- ---- SALAIRE NET ---- -->
+        <!-- Salaire -->
         <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 class="text-lg font-black text-blue-700 mb-3 flex items-center gap-2">
             <i class="fa-solid fa-wallet text-blue-500"></i>
             Salaire brut → net
           </h3>
-
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Salaire brut mensuel (€)
-          </label>
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Salaire brut mensuel (€)</label>
           <input id="sal_brut" type="number" placeholder="Ex : 2300"
-                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-blue-500">
+                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-blue-500">
 
-          <button class="btn-soft w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3
-                                   rounded-xl"
+          <button class="btn-soft w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl"
                   onclick="calcSalaireNet()">
             Calculer le net estimé
           </button>
 
-          <div id="sal_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-blue-50 border
-                                         border-blue-100">
-            <p class="text-[10px] uppercase tracking-[0.18em] font-bold text-blue-700">
-              Résultat
-            </p>
+          <div id="sal_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-blue-50 border border-blue-100">
+            <p class="text-[10px] uppercase tracking-[0.18em] font-bold text-blue-700">Résultat</p>
             <p id="sal_res" class="text-2xl font-black text-blue-700 mt-1"></p>
-            <p class="text-[11px] text-blue-600 mt-1">
-              Estim. (non officielle) – peut varier selon statut/charges.
-            </p>
+            <p class="text-[11px] text-blue-600 mt-1">Estimation (non officielle) – peut varier selon statut/charges.</p>
           </div>
         </article>
 
-        <!-- ---- PRÊT IMMOBILIER ---- -->
+        <!-- Prêt immo -->
         <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 class="text-lg font-black text-indigo-700 mb-3 flex items-center gap-2">
             <i class="fa-solid fa-house-chimney text-indigo-500"></i>
             Prêt immobilier (mensualité)
           </h3>
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Montant emprunté (€)
-          </label>
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Montant emprunté (€)</label>
           <input id="loan_capital" type="number" placeholder="Ex : 200000"
-                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-indigo-500">
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-indigo-500">
 
           <div class="grid grid-cols-2 gap-2 mb-2">
             <div>
-              <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-                Durée (années)
-              </label>
+              <label class="block text-[11px] font-semibold text-slate-500 mb-1">Durée (années)</label>
               <input id="loan_years" type="number" placeholder="Ex : 25"
-                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50
-                            outline-none focus:border-indigo-500">
+                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-indigo-500">
             </div>
             <div>
-              <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-                Taux annuel (%) 
-              </label>
+              <label class="block text-[11px] font-semibold text-slate-500 mb-1">Taux annuel (%)</label>
               <input id="loan_rate" type="number" step="0.01" placeholder="Ex : 3.2"
-                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50
-                            outline-none focus:border-indigo-500">
+                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-indigo-500">
             </div>
           </div>
 
-          <button class="btn-soft w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-3
-                                   rounded-xl"
+          <button class="btn-soft w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-3 rounded-xl"
                   onclick="calcPretImmo()">
             Calculer
           </button>
 
-          <div id="loan_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-indigo-50 border
-                                         border-indigo-100 text-indigo-800">
-            <p class="text-[10px] uppercase tracking-[0.18em] font-bold text-indigo-700">
-              Résultat
-            </p>
+          <div id="loan_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-indigo-50 border border-indigo-100">
+            <p class="text-[10px] uppercase tracking-[0.18em] font-bold text-indigo-700">Résultat</p>
             <p id="loan_res" class="text-2xl font-black text-indigo-700 mt-1"></p>
             <p id="loan_total" class="text-sm text-indigo-700 mt-1"></p>
           </div>
         </article>
 
-        <!-- ---- TVA ---- -->
+        <!-- TVA -->
         <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 class="text-lg font-black text-orange-700 mb-3 flex items-center gap-2">
             <i class="fa-solid fa-receipt text-orange-500"></i>
             TVA (HT → TTC)
           </h3>
-
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Montant HT (€)
-          </label>
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Montant HT (€)</label>
           <input id="tva_ht" type="number" placeholder="Ex : 100"
-                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-orange-500">
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-orange-500">
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Taux de TVA
-          </label>
-          <select id="tva_rate" class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50
-                                     outline-none focus:border-orange-500">
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Taux de TVA</label>
+          <select id="tva_rate" class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-orange-500">
             <option value="20">20 % (taux normal)</option>
             <option value="10">10 %</option>
             <option value="5.5">5,5 %</option>
             <option value="2.1">2,1 %</option>
           </select>
 
-          <button class="btn-soft w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-3
-                                   rounded-xl"
+          <button class="btn-soft w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-3 rounded-xl"
                   onclick="calcTVA()">
             Calculer
           </button>
 
-          <div id="tva_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-orange-50 border
-                                         border-orange-100 text-orange-800"></div>
+          <div id="tva_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-orange-50 border border-orange-100 text-orange-800"></div>
         </article>
 
-        <!-- ---- INTÉRÊTS COMPOSÉS ---- -->
+        <!-- Intérêts composés -->
         <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 class="text-lg font-black text-emerald-700 mb-3 flex items-center gap-2">
             <i class="fa-solid fa-piggy-bank text-emerald-500"></i>
             Intérêts composés (épargne)
           </h3>
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Capital initial (€)
-          </label>
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Capital initial (€)</label>
           <input id="ic_init" type="number" placeholder="Ex : 5000"
-                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-emerald-500">
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-emerald-500">
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Versement mensuel (€)
-          </label>
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Versement mensuel (€)</label>
           <input id="ic_monthly" type="number" placeholder="Ex : 100"
-                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-emerald-500">
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-emerald-500">
 
           <div class="grid grid-cols-2 gap-2 mb-2">
             <div>
-              <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-                Durée (années)
-              </label>
+              <label class="block text-[11px] font-semibold text-slate-500 mb-1">Durée (années)</label>
               <input id="ic_years" type="number" placeholder="Ex : 10"
-                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50
-                            outline-none focus:border-emerald-500">
+                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-emerald-500">
             </div>
             <div>
-              <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-                Taux annuel (%) 
-              </label>
+              <label class="block text-[11px] font-semibold text-slate-500 mb-1">Taux annuel (%)</label>
               <input id="ic_rate" type="number" step="0.1" placeholder="Ex : 4"
-                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50
-                            outline-none focus:border-emerald-500">
+                     class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-emerald-500">
             </div>
           </div>
 
-          <button class="btn-soft w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3
-                                   rounded-xl"
+          <button class="btn-soft w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl"
                   onclick="calcInteretsComposes()">
             Estimer le capital final
           </button>
 
-          <div id="ic_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-emerald-50 border
-                                         border-emerald-100 text-emerald-800"></div>
+          <div id="ic_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-800"></div>
         </article>
 
-        <!-- ---- ENDEU-TE-NXTE (Taux d'endettement) ---- -->
+        <!-- Endettement -->
         <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
             <i class="fa-solid fa-scale-balanced text-slate-600"></i>
             Taux d’endettement
           </h3>
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Revenus mensuels (€)
-          </label>
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Revenus mensuels (€)</label>
           <input id="debt_income" type="number" placeholder="Ex : 2500"
-                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-slate-500">
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-slate-500">
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Charges / crédits mensuels (€)
-          </label>
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Charges / crédits mensuels (€)</label>
           <input id="debt_charges" type="number" placeholder="Ex : 800"
-                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-slate-500">
+                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-slate-500">
 
-          <button class="btn-soft w-full bg-slate-800 hover:bg-slate-900 text-white font-black py-3
-                                   rounded-xl"
+          <button class="btn-soft w-full bg-slate-800 hover:bg-slate-900 text-white font-black py-3 rounded-xl"
                   onclick="calcEndettement()">
             Calculer
           </button>
 
-          <div id="debt_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-slate-100 border
-                                         border-slate-200 text-slate-800"></div>
+          <div id="debt_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-800"></div>
         </article>
 
-        <!-- ==================== FACTURE D' EAU ==================== -->
+      </div>
+    </section>
+
+    <!-- CHÔMAGE -->
+    <section id="chomage">
+      <div class="mb-4">
+        <h2 class="text-2xl md:text-3xl font-black">Chômage</h2>
+        <p class="text-sm text-slate-600">
+          Estimation de l’allocation chômage (ARE) – outil indicatif, non officiel.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- ARE -->
         <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-lg font-black text-sky-700 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-water text-sky-600"></i>
-            Facture d’eau (m³)
+          <h3 class="text-lg font-black text-green-700 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-green-500"></i>
+            Estimation chômage (ARE)
           </h3>
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Consommation (m³)
-          </label>
-          <input id="water_consumption" type="number" placeholder="Ex : 120"
-                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-sky-500">
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Salaire brut mensuel moyen (€)</label>
+          <input id="are_brut" type="number" placeholder="Ex : 2000"
+                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-green-500">
 
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Tarif unitaire (€/m³)
-          </label>
-          <input id="water_rate" type="number" step="0.001" placeholder="Ex : 0.45"
-                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-sky-500">
-
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            Frais fixes (€/mois)  *optionnel*
-          </label>
-          <input id="water_fixed" type="number" placeholder="Ex : 5"
-                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-sky-500">
-
-          <label class="block text-[11px] font-semibold text-slate-500 mb-1">
-            TVA (%)  (par défaut 20 %)
-          </label>
-          <input id="water_vat" type="number" min="0" max="25" step="0.1" value="20"
-                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50
-                        outline-none focus:border-sky-500">
-
-          <button class="btn-soft w-full bg-sky-600 hover:bg-sky-700 text-white font-black py-3
-                                   rounded-xl"
-                  onclick="calcWaterBill()">
-            Calculer la facture
+          <button class="btn-soft w-full bg-green-600 hover:bg-green-700 text-white font-black py-3 rounded-xl"
+                  onclick="calcChomageARE()">
+            Estimer mon ARE
           </button>
 
-          <div id="water_out"
-               class="hidden fade-in mt-4 p-3 rounded-xl bg-sky-50 border border-sky-100
-                    text-sky-800">
-            <p class="text-[10px] uppercase tracking-[0.18em] font-bold text-sky-700">
-              Ta facture d’eau
+          <div id="are_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-green-50 border border-green-100 text-green-800"></div>
+
+          <p class="mt-3 text-[11px] text-slate-500">
+            Note : estimation simplifiée. Les règles officielles dépendent de la situation.
+          </p>
+        </article>
+
+        <!-- Nettoyage / motivation SEO -->
+        <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb text-yellow-500"></i>
+            Astuce rapide
+          </h3>
+          <p class="text-sm text-slate-600">
+            Les recherches “<strong>calcul chômage</strong>”, “<strong>simulateur ARE</strong>” et “<strong>indemnité chômage</strong>”
+            sont très fréquentes. Ici tu obtiens un chiffre clair et tu peux refaire le calcul autant de fois que tu veux.
+          </p>
+          <div class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
+            <p class="font-bold mb-1">Mots-clés importants :</p>
+            <p class="text-slate-600">
+              estimation chômage, allocation chômage ARE, simulateur chômage, calcul indemnité chômage, droits chômage.
             </p>
+          </div>
+        </article>
 
-            <p><strong>Consommation :</strong> <span id="wb_consumption"></span> m³</p>
-            <p><strong>Tarif unitaire :</strong> <span id="wb_rate"></span> €/m³</p>
-            <p><strong>Frais fixes :</strong> <span id="wb_fixed"></span> €</p>
-            <p><strong>Sous‑total HT :</strong> <span id="wb_subtotal"></span> €</p>
-            <p><strong>TVA ({{vat}} %) :</strong> <span id="wb_vat"></span> €</p>
-            <p class="total"><strong>TOTAL TTC :</strong> <span id="wb_total"></span> €</p>
+      </div>
+    </section>
 
-            <p class="mt-3 text-[11px] text-slate-500">
-              Résultat fourni à titre informatif 
+    <!-- TRAJET -->
+    <section id="trajet">
+      <div class="mb-4">
+        <h2 class="text-2xl md:text-3xl font-black">Trajet</h2>
+        <p class="text-sm text-slate-600">Durée de trajet + coût essence (super utile et très recherché).</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- Durée trajet -->
+        <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-road text-slate-700"></i>
+            Durée de trajet
+          </h3>
+
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Distance (km)</label>
+          <input id="trip_dist" type="number" placeholder="Ex : 320"
+                 class="w-full mb-2 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-slate-500">
+
+          <label class="block text-[11px] font-semibold text-slate-500 mb-1">Vitesse moyenne (km/h)</label>
+          <input id="trip_speed" type="number" placeholder="Ex : 110"
+                 class="w-full mb-3 p-3 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-slate-500">
+
+          <button class="btn-soft w-full bg-slate-800 hover:bg-slate-900 text-white font-black py-3 rounded-xl"
+                  onclick="calcDureeTrajet()">
+            Calculer
+          </button>
+
+          <div id="trip_out" class="hidden fade-in mt-4 p-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-800"></div>
+        </article>
+
+        <!-- Coût essence -->
+        <article class="card bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="text-lg font-black text-sky-700 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-gas
